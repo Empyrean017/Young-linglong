@@ -1,850 +1,1494 @@
+
 <!DOCTYPE html>
-<html lang="zh-CN"><head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>灵笼 INCARNATION：末日启示录与灵魂囚笼</title>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>《灵笼》专题研究报告：国产科幻动画的里程碑</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'serif': ['Noto Serif SC', 'serif'],
-                        'sans': ['Inter', 'sans-serif']
-                    },
-                    colors: {
-                        'primary': '#2A3B4C',
-                        'secondary': '#4A5568',
-                        'accent': '#E53E3E',
-                        'neutral': '#F7F5F3',
-                        'base': '#1A202C',
-                        'warning': '#D69E2E',
-                        'success': '#38A169'
-                    },
-                    backgroundImage: {
-                        'dust-gradient': 'linear-gradient(135deg, #2A3B4C 0%, #4A5568 50%, #1A202C 100%)',
-                        'light-gradient': 'linear-gradient(135deg, rgba(229, 62, 62, 0.1) 0%, rgba(74, 85, 104, 0.2) 100%)'
-                    }
-                }
-            }
-        }
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
     <style>
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --neutral: #0f3460;
+            --base-100: #ffffff;
+            --base-200: #f8fafc;
+            --base-300: #e2e8f0;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: var(--primary);
+        }
+        
+        .serif {
+            font-family: 'Noto Serif SC', serif;
+        }
+        
         .hero-gradient {
-            background: linear-gradient(135deg, rgba(42, 59, 76, 0.9) 0%, rgba(26, 32, 44, 0.8) 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--neutral) 100%);
         }
-        .text-shadow {
-            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        
+        .text-gradient {
+            background: linear-gradient(135deg, var(--accent), #f72585);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
+        
         .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
+        
         .toc-fixed {
             position: fixed;
             top: 0;
             left: 0;
+            width: 280px;
             height: 100vh;
-            width: 300px;
-            z-index: 40;
+            background: var(--base-100);
+            border-right: 1px solid var(--base-300);
+            z-index: 1000;
             overflow-y: auto;
+            padding: 2rem 1.5rem;
         }
-        .content-offset {
-            margin-left: 300px;
+        
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
         }
+        
+        .toc-link {
+            display: block;
+            padding: 0.5rem 0;
+            color: var(--neutral);
+            text-decoration: none;
+            border-left: 2px solid transparent;
+            padding-left: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .toc-link:hover {
+            color: var(--accent);
+            border-left-color: var(--accent);
+            background: rgba(233, 69, 96, 0.05);
+        }
+        
+        .toc-link.active {
+            color: var(--accent);
+            border-left-color: var(--accent);
+            background: rgba(233, 69, 96, 0.1);
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            margin: 4rem 0;
+        }
+        
+        .citation {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .citation:hover {
+            text-decoration: underline;
+        }
+        
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 1.5rem;
+            height: 70vh;
+        }
+        
+        .bento-main {
+            grid-row: 1 / 3;
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+        }
+        
+        .bento-side {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, rgba(26, 26, 46, 0.8), rgba(15, 52, 96, 0.6));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 3rem;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .stats-card {
+            background: linear-gradient(135deg, var(--base-100), var(--base-200));
+            border: 1px solid var(--base-300);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stats-label {
+            font-size: 0.9rem;
+            color: var(--neutral);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Mermaid 图表样式 - 提高对比度 */
+        .mermaid-container {
+            display: flex;
+            justify-content: center;
+            min-height: 300px;
+            max-height: 800px;
+            background: var(--base-100);
+            border: 2px solid var(--base-300);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mermaid-container .mermaid {
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            cursor: grab;
+            transition: transform 0.3s ease;
+            transform-origin: center center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .mermaid-container .mermaid svg {
+            max-width: 100%;
+            height: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .mermaid-container .mermaid:active {
+            cursor: grabbing;
+        }
+
+        .mermaid-container.zoomed .mermaid {
+            height: 100%;
+            width: 100%;
+            cursor: grab;
+        }
+
+        .mermaid-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .mermaid-control-btn {
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #374151;
+            font-size: 14px;
+            min-width: 36px;
+            height: 36px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mermaid-control-btn:hover {
+            background: #f8fafc;
+            border-color: #3b82f6;
+            color: #3b82f6;
+            transform: translateY(-1px);
+        }
+
+        .mermaid-control-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* 自定义 Mermaid 主题样式 - 提高对比度 */
+        .mermaid .node rect,
+        .mermaid .node circle,
+        .mermaid .node ellipse,
+        .mermaid .node polygon {
+            stroke: var(--accent) !important;
+            stroke-width: 2px !important;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+        }
+        
+        .mermaid .node .label,
+        .mermaid .nodeLabel {
+            color: var(--primary) !important;
+            font-weight: 600 !important;
+            font-size: 14px !important;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+            font-family: 'Inter', sans-serif !important;
+        }
+        
+        .mermaid .edgePath .path {
+            stroke: var(--neutral) !important;
+            stroke-width: 2px !important;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+        }
+        
+        .mermaid .arrowheadPath {
+            fill: var(--neutral) !important;
+            stroke: var(--neutral) !important;
+        }
+        
+        .mermaid .edgeLabel {
+            background-color: var(--base-100) !important;
+            color: var(--primary) !important;
+            font-weight: 500 !important;
+            padding: 4px 8px !important;
+            border-radius: 4px !important;
+            border: 1px solid var(--base-300) !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+        }
+
         @media (max-width: 1024px) {
             .toc-fixed {
                 transform: translateX(-100%);
                 transition: transform 0.3s ease;
             }
-            .toc-fixed.show {
+            
+            .toc-fixed.open {
                 transform: translateX(0);
             }
-            .content-offset {
+            
+            .main-content {
                 margin-left: 0;
             }
+            
+        .bento-grid {
+            grid-template-columns: 1fr;
+            height: auto;
         }
-        .floating-particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 1;
+        
+        .bento-main {
+            grid-row: auto;
+            height: 50vh;
         }
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(229, 62, 62, 0.6);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
+
+        .mermaid-control-btn:not(.reset-zoom) {
+            display: none;
         }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
-            50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+        .mermaid-controls {
+            top: auto;
+            bottom: 15px;
+            right: 15px;
         }
+    }
+
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .bento-main {
+            height: 40vh;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .hero-title {
+            font-size: 2rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1rem;
+        }
+        
+        .bento-main {
+            height: 35vh;
+        }
+    }
+
+    @media (max-width: 390px) {
+        .hero-title {
+            font-size: 1.8rem;
+        }
+        
+        .bento-main {
+            height: 30vh;
+        }
+    }
     </style>
-  </head>
+</head>
 
-  <body class="font-sans text-base bg-neutral text-base leading-relaxed">
-    <!-- Table of Contents -->
-    <nav class="toc-fixed glass-effect border-r border-secondary/20 p-6">
-      <div class="mb-8">
-        <h3 class="font-serif text-lg font-semibold text-primary mb-4">目录</h3>
-        <ul class="space-y-3 text-sm">
-          <li>
-            <a class="text-base hover:text-accent transition-colors" href="#hero">引言</a>
-          </li>
-          <li>
-            <a class="text-base hover:text-accent transition-colors" href="#world">世界观设定</a>
-            <ul class="ml-4 mt-2 space-y-2 text-xs">
-              <li>
-                <a class="text-gray-600 hover:text-accent" href="#background">末日背景</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-accent" href="#lighthouse">灯塔文明</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-accent" href="#ground">地面社会</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-accent" href="#mana">玛娜生态</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a class="text-base hover:text-accent transition-colors" href="#characters">核心角色</a>
-            <ul class="ml-4 mt-2 space-y-2 text-xs">
-              <li>
-                <a class="text-gray-600 hover:text-accent" href="#mark">马克</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-accent" href="#ranbing">冉冰</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-accent" href="#bai">白月魁</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-accent" href="#charles">查尔斯</a>
-              </li>
-              <li>
-                <a class="text-gray-600 hover:text-accent" href="#others">其他人物</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a class="text-base hover:text-accent transition-colors" href="#themes">核心主题</a>
-          </li>
-          <li>
-            <a class="text-base hover:text-accent transition-colors" href="#legacy">文化影响</a>
-          </li>
-        </ul>
-      </div>
-
-      <div class="border-t border-secondary/20 pt-6">
-        <h4 class="font-serif text-sm font-semibold text-primary mb-3">关键信息</h4>
-        <div class="space-y-3 text-xs text-gray-600">
-          <div class="p-3 bg-accent/20 rounded-lg">
-            <strong class="text-accent">末日废土</strong>
-            <br/>
-            玛娜生态危机
-          </div>
-          <div class="p-3 bg-accent/20 rounded-lg">
-            <strong class="text-accent">阶级对立</strong>
-            <br/>
-            上民vs尘民
-          </div>
-          <div class="p-3 bg-accent/20 rounded-lg">
-            <strong class="text-accent">人性拷问</strong>
-            <br/>
-            生存vs尊严
-          </div>
+<body class="bg-gray-50">
+    <!-- Fixed Table of Contents -->
+    <nav class="toc-fixed">
+        <div class="mb-8">
+            <h3 class="text-lg font-bold text-gray-900 mb-4">目录导航</h3>
+            <div class="space-y-1">
+                <a href="#introduction" class="toc-link text-sm">引言</a>
+                <a href="#development" class="toc-link text-sm">开发历程</a>
+                <a href="#worldview" class="toc-link text-sm">世界观设定</a>
+                <a href="#characters" class="toc-link text-sm">角色群像</a>
+                <a href="#production" class="toc-link text-sm">制作技术</a>
+                <a href="#reception" class="toc-link text-sm">市场反响</a>
+                <a href="#culture" class="toc-link text-sm">文化内涵</a>
+                <a href="#future" class="toc-link text-sm">未来展望</a>
+                <a href="#conclusion" class="toc-link text-sm">结论</a>
+            </div>
         </div>
-      </div>
+
+        <div class="mt-12 p-4 bg-orange-50 rounded-lg">
+            <h4 class="font-semibold text-orange-800 mb-2">核心数据</h4>
+            <div class="space-y-2 text-sm">
+                <div class="flex justify-between">
+                    <span class="text-orange-700">豆瓣评分</span>
+                    <span class="font-bold text-orange-900">8.9分</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-orange-700">B站评分</span>
+                    <span class="font-bold text-orange-900">9.8分</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-orange-700">制作周期</span>
+                    <span class="font-bold text-orange-900">4年</span>
+                </div>
+            </div>
+        </div>
     </nav>
 
-    <!-- Hamburger Menu Button (Mobile) -->
-    <button class="lg:hidden fixed top-4 left-4 z-50 bg-primary/90 p-2 rounded-lg shadow-lg" id="toc-toggle">
-      <i class="fas fa-bars text-white"></i>
-    </button>
-
-    <!-- Overlay for TOC on Mobile -->
-    <div class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden" id="toc-overlay"></div>
-
     <!-- Main Content -->
-    <main class="content-offset">
-      <!-- Hero Section -->
-      <section class="hero-gradient min-h-screen flex items-center relative" id="hero">
-        <div class="floating-particles">
-          <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
-          <div class="particle" style="left: 20%; animation-delay: 1s;"></div>
-          <div class="particle" style="left: 30%; animation-delay: 2s;"></div>
-          <div class="particle" style="left: 40%; animation-delay: 3s;"></div>
-          <div class="particle" style="left: 50%; animation-delay: 4s;"></div>
-          <div class="particle" style="left: 60%; animation-delay: 5s;"></div>
-          <div class="particle" style="left: 70%; animation-delay: 0.5s;"></div>
-          <div class="particle" style="left: 80%; animation-delay: 1.5s;"></div>
-          <div class="particle" style="left: 90%; animation-delay: 2.5s;"></div>
-        </div>
-        
-        <div class="container mx-auto px-8 py-16 relative z-10">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div class="space-y-8">
-              <div class="space-y-6">
-                <h1 class="font-serif text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight text-shadow">
-                  灵笼
-                  <br/>
-                  <span class="italic text-accent">INCARNATION</span>
-                  <br/>
-                  末日启示录
-                </h1>
-                <p class="text-xl lg:text-2xl text-gray-200 font-light max-w-2xl">
-                  当文明崩塌，人性成为最后的囚笼。在玛娜生态的末日废土中，
-                  探索生存与尊严的终极命题。
-                </p>
-              </div>
-
-              <!-- Key Highlights Grid -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
-                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-lg border border-white/20">
-                  <div class="flex items-center mb-3">
-                    <i class="fas fa-skull text-accent text-2xl mr-4"></i>
-                    <h3 class="font-serif text-lg font-semibold text-white">末日废土</h3>
-                  </div>
-                  <p class="text-sm text-gray-300">玛娜生态危机，噬极兽横行，人类文明濒临灭绝</p>
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="relative">
+            <div class="bento-grid max-w-7xl mx-auto p-8">
+                <!-- Main Hero -->
+                <div class="bento-main">
+                    <img src="https://kimi-web-img.moonshot.cn/img/haowallpaper.com/4k灵笼壁纸白月魁背景图片-科幻3840x2160.jpg" alt="《灵笼》白月魁科幻场景" class="w-full h-full object-cover" size="large" aspect="wide" style="photo" query="灵笼 白月魁 科幻场景" referrerpolicy="no-referrer" data-modified="1" data-score="11597.00"/>
+                    <div class="hero-overlay">
+                        <div>
+                            <h1 class="hero-title serif text-gradient">《灵笼》</h1>
+                            <p class="hero-subtitle">国产科幻动画的里程碑 · 东方哲思与末世科幻的完美融合</p>
+                            <p class="mt-4 text-sm opacity-75">署名：Mr.Pan</p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-lg border border-white/20">
-                  <div class="flex items-center mb-3">
-                    <i class="fas fa-balance-scale text-accent text-2xl mr-4"></i>
-                    <h3 class="font-serif text-lg font-semibold text-white">阶级对立</h3>
-                  </div>
-                  <p class="text-sm text-gray-300">灯塔的"三大法则"将人类分为上民与尘民</p>
+                <!-- Side Stats -->
+                <div class="bento-side">
+                    <div class="stats-card">
+                        <div class="stats-number">8.9</div>
+                        <div class="stats-label">豆瓣评分</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-number">9.8</div>
+                        <div class="stats-label">B站评分</div>
+                    </div>
                 </div>
-
-                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-lg border border-white/20">
-                  <div class="flex items-center mb-3">
-                    <i class="fas fa-heart-broken text-accent text-2xl mr-4"></i>
-                    <h3 class="font-serif text-lg font-semibold text-white">人性拷问</h3>
-                  </div>
-                  <p class="text-sm text-gray-300">生存与尊严的终极选择，情感与制度的激烈碰撞</p>
-                </div>
-
-                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-lg border border-white/20">
-                  <div class="flex items-center mb-3">
-                    <i class="fas fa-dna text-accent text-2xl mr-4"></i>
-                    <h3 class="font-serif text-lg font-semibold text-white">进化变异</h3>
-                  </div>
-                  <p class="text-sm text-gray-300">马克的噬极兽化，人类进化的全新可能性</p>
-                </div>
-              </div>
             </div>
+        </section>
 
-            <!-- Visual Element -->
-            <div class="relative">
-              <div class="bg-gradient-to-br from-accent/20 to-primary/30 rounded-2xl p-8">
-                <img alt="灵笼末日废土场景" class="w-full h-64 sm:h-80 md:h-96 object-cover rounded-lg shadow-2xl" src="https://kimi-web-img.moonshot.cn/img/alicdn.kzstatic.com/5b0d3f4e5c5f5e4c5d5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e" style="photo" size="large" aspect="wide" query="灵笼 末日废土" referrerpolicy="no-referrer" data-modified="1" data-score="11597.00"/>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+        <!-- Introduction -->
+        <section id="introduction" class="py-16 px-8">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl font-bold serif mb-8 text-center">引言：国产科幻动画的破壁之作</h2>
 
-      <!-- Section 1: Worldview -->
-      <section class="py-20 bg-white" id="world">
-        <div class="container mx-auto px-8">
-          <div class="max-w-4xl mx-auto">
-            <h2 class="font-serif text-4xl font-bold text-primary mb-12 text-center">世界观设定</h2>
-
-            <!-- Background -->
-            <div class="mb-16" id="background">
-              <h3 class="font-serif text-2xl font-bold text-primary mb-6">末日背景：玛娜生态危机</h3>
-              <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                <div class="space-y-4 text-gray-700">
-                  <p>在《灵笼》的世界中，一场突如其来的生态浩劫彻底改变了地球的面貌。被称为<strong>玛娜生态</strong>的全新生态系统取代了原有秩序，地蔓藤疯狂生长，噬极兽横行霸道，人类文明面临灭顶之灾。</p>
-                  
-                  <p>这场灾难不仅改变了地球的物理环境，更深刻地影响了人类的生存方式和社会结构。地面上的一切生命都在玛娜生态的统治下苟延残喘，而幸存的人类不得不寻找新的生存之道。</p>
-
-                  <div class="bg-warning/10 p-4 rounded-lg">
-                    <h4 class="font-serif font-semibold text-warning mb-2">灾难特征</h4>
-                    <ul class="text-sm space-y-1">
-                      <li>• 噬极兽：以人类生命源质为食的恐怖生物</li>
-                      <li>• 玛娜之花：释放孢子控制生物行为</li>
-                      <li>• 地蔓藤：覆盖大地的致命植物网络</li>
-                      <li>• 肉土：被吸取生命源质的人类遗骸</li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="relative">
-                  <img alt="灵笼玛娜生态噬极兽概念图" class="w-full h-64 object-cover rounded-lg shadow-lg" src="https://kimi-web-img.moonshot.cn/img/ikunshare.com/5b0d3f4e5c5f5e4c5d5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e" style="photo" size="medium" aspect="wide" query="灵笼 玛娜生态 噬极兽" referrerpolicy="no-referrer" data-modified="1" data-score="11599.00"/>
-                </div>
-              </div>
-            </div>
-
-            <!-- Lighthouse -->
-            <div class="mb-16" id="lighthouse">
-              <h3 class="font-serif text-2xl font-bold text-primary mb-6">灯塔文明：空中最后的堡垒</h3>
-              <div class="bg-gradient-to-r from-primary/5 to-secondary/10 p-8 rounded-lg">
-                <p class="text-gray-700 mb-4">
-                  <strong>灯塔</strong>，这个悬浮于高空的巨大堡垒，成为了人类最后的避难所。它不仅是物理意义上的庇护所，更是人类社会在末日环境下的极端实验场。
-                </p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div class="bg-white p-6 rounded-lg shadow-sm">
-                    <h4 class="font-serif font-semibold text-primary mb-3">三大生存法则</h4>
-                    <ul class="text-sm space-y-2">
-                      <li><strong>基因优选：</strong>按基因优劣分为上民和尘民</li>
-                      <li><strong>取缔家庭：</strong>禁止血缘关系，统一繁育</li>
-                      <li><strong>奉献点制度：</strong>用贡献换取生存资源</li>
-                    </ul>
-                  </div>
-                  <div class="bg-white p-6 rounded-lg shadow-sm">
-                    <h4 class="font-serif font-semibold text-primary mb-3">权力结构</h4>
-                    <ul class="text-sm space-y-2">
-                      <li><strong>城主：</strong>最高统治者</li>
-                      <li><strong>光影会：</strong>宗教与思想控制机构</li>
-                      <li><strong>猎荒者：</strong>地面资源搜集部队</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Ground Society -->
-            <div class="mb-16" id="ground">
-              <h3 class="font-serif text-2xl font-bold text-primary mb-6">地面社会：与生态的共生尝试</h3>
-              <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div>
-                  <p class="text-gray-700 mb-4">
-                    与灯塔的对抗策略不同，地面幸存者选择了<strong>理解并适应玛娜生态</strong>的道路。以<strong>白月魁</strong>为代表的地面人类，发展出了独特的生存方式。
-                  </p>
-                  
-                  <div class="bg-success/10 p-4 rounded-lg">
-                    <h4 class="font-serif font-semibold text-success mb-2">地面生存策略</h4>
-                    <ul class="text-sm space-y-1">
-                      <li>• 生命源质的控制与运用</li>
-                      <li>• 与噬极兽的精神链接</li>
-                      <li>• 传统修炼与现代科技结合</li>
-                      <li>• 社区式互助生存模式</li>
-                    </ul>
-                  </div>
-                </div>
-                <div>
-                  <img alt="灵笼龙骨村地面人类聚落" class="w-full h-64 object-cover rounded-lg shadow-lg" src="https://kimi-web-img.moonshot.cn/img/alicdn.kzstatic.com/5b0d3f4e5c5f5e4c5d5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e" style="photo" size="medium" aspect="wide" query="灵笼 龙骨村" referrerpolicy="no-referrer" data-modified="1" data-score="11598.00"/>
-                </div>
-              </div>
-            </div>
-
-            <!-- Mana Ecology -->
-            <div id="mana">
-              <h3 class="font-serif text-2xl font-bold text-primary mb-6">玛娜生态：全新的生命体系</h3>
-              <div class="bg-gray-50 p-8 rounded-lg">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div class="text-center p-4">
-                    <i class="fas fa-seedling text-success text-4xl mb-4"></i>
-                    <h4 class="font-serif font-semibold text-primary mb-2">玛娜之花</h4>
-                    <p class="text-sm text-gray-600">生态系统的核心，控制生物行为</p>
-                  </div>
-                  <div class="text-center p-4">
-                    <i class="fas fa-spider text-warning text-4xl mb-4"></i>
-                    <h4 class="font-serif font-semibold text-primary mb-2">噬极兽</h4>
-                    <p class="text-sm text-gray-600">以生命源质为食的捕食者</p>
-                  </div>
-                  <div class="text-center p-4">
-                    <i class="fas fa-network-wired text-accent text-4xl mb-4"></i>
-                    <h4 class="font-serif font-semibold text-primary mb-2">生态网络</h4>
-                    <p class="text-sm text-gray-600">地蔓藤构成的生命链接系统</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 2: Characters -->
-      <section class="py-20 bg-neutral" id="characters">
-        <div class="container mx-auto px-8">
-          <div class="max-w-6xl mx-auto">
-            <h2 class="font-serif text-4xl font-bold text-primary mb-12 text-center">核心角色群像</h2>
-
-            <!-- Mark -->
-            <div class="mb-16" id="mark">
-              <div class="bg-white p-8 rounded-lg shadow-lg">
-                <h3 class="font-serif text-2xl font-bold text-primary mb-6">马克：从英雄到异类的蜕变</h3>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                  <div class="lg:col-span-2 space-y-4">
-                    <p class="text-gray-700">
-                      <strong>马克</strong>，灯塔猎荒者队长，曾是灯塔文明的守护者。作为最出色的战士，他带领队伍深入地面寻找资源，保护灯塔居民的安全。然而，对尘民的相对友善态度在等级森严的灯塔中显得格外珍贵。
+                <div class="prose prose-lg max-w-none">
+                    <p class="text-xl leading-relaxed mb-6 text-gray-700">
+                        <strong class="text-orange-600">在国产动画崛起的浪潮中，《灵笼》犹如一颗璀璨的明珠，以其独特的东方哲思与末世科幻的完美融合，开创了国产科幻动画的新纪元。</strong> 这部由艺画开天与bilibili联合出品的原创3D动画，不仅在豆瓣斩获8.9分、B站评分高达9.8分的傲人成绩，更以其精湛的制作水准和深刻的思想内涵，成为国产动画走向世界的重要里程碑。
                     </p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div class="bg-accent/10 p-4 rounded-lg">
-                        <h4 class="font-serif font-semibold text-accent mb-2">身份转变</h4>
-                        <ul class="text-sm space-y-1">
-                          <li>• 猎荒者队长 → 被追捕者</li>
-                          <li>• 体制维护者 → 反抗者</li>
-                          <li>• 人类 → 噬极兽化存在</li>
-                        </ul>
-                      </div>
-                      <div class="bg-primary/10 p-4 rounded-lg">
-                        <h4 class="font-serif font-semibold text-primary mb-2">关键事件</h4>
-                        <ul class="text-sm space-y-1">
-                          <li>• 冉冰之死与灵魂吸收</li>
-                          <li>• 与脊蛊融合变异</li>
-                          <li>• 摧毁守护的灯塔</li>
-                        </ul>
-                      </div>
-                    </div>
 
-                    <blockquote class="border-l-4 border-accent pl-4 italic text-gray-600">
-                      "真正的幸福是和所爱的人在地面上生活。" —— 马克姐姐红蔻的遗言
-                    </blockquote>
-                  </div>
-                  <div class="flex items-center justify-center">
-                    <div class="text-center p-6 bg-gradient-to-br from-accent/10 to-primary/10 rounded-lg">
-                      <i class="fas fa-user-shield text-accent text-6xl mb-4"></i>
-                      <p class="text-sm text-gray-600">从守护灯塔到质疑体制，马克的蜕变象征着对人性尊严的终极追求</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Ranbing -->
-            <div class="mb-16" id="ranbing">
-              <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div>
-                  <img alt="灵笼角色冉冰" class="w-full h-80 object-cover rounded-lg shadow-lg" src="https://kimi-web-img.moonshot.cn/img/alicdn.kzstatic.com/5b0d3f4e5c5f5e4c5d5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e" style="photo" size="medium" aspect="wide" query="灵笼 冉冰" referrerpolicy="no-referrer" data-modified="1" data-score="11599.00"/>
-                </div>
-                <div class="space-y-4">
-                  <h3 class="font-serif text-2xl font-bold text-primary">冉冰：爱与牺牲的化身</h3>
-                  <p class="text-gray-700">
-                    <strong>冉冰</strong>，猎荒者副队长，马克的挚爱。她的存在挑战了灯塔"取缔家庭"的铁律，代表着人类最纯粹的情感与羁绊。
-                  </p>
-                  
-                  <div class="space-y-3">
-                    <div class="flex items-start space-x-3">
-                      <i class="fas fa-heart text-accent mt-1"></i>
-                      <div>
-                        <strong class="text-base">爱情象征</strong>
-                        <p class="text-sm text-gray-600">对抗冷酷制度的人性之光</p>
-                      </div>
-                    </div>
-                    <div class="flex items-start space-x-3">
-                      <i class="fas fa-angel text-accent mt-1"></i>
-                      <div>
-                        <strong class="text-base">悲剧命运</strong>
-                        <p class="text-sm text-gray-600">为爱情付出生命的代价</p>
-                      </div>
-                    </div>
-                    <div class="flex items-start space-x-3">
-                      <i class="fas fa-infinity text-accent mt-1"></i>
-                      <div>
-                        <strong class="text-base">灵魂永存</strong>
-                        <p class="text-sm text-gray-600">生命源质被马克吸收，精神永存</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="bg-accent/10 p-4 rounded-lg">
-                    <p class="text-sm italic text-gray-700">"爱是对必朽者的敬仰"——她的牺牲成为马克蜕变的催化剂</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Bai Yuekui -->
-            <div class="mb-16" id="bai">
-              <div class="bg-gradient-to-r from-success/10 to-primary/5 p-8 rounded-lg">
-                <h3 class="font-serif text-2xl font-bold text-primary mb-6">白月魁：地面文明的引路人</h3>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                  <div class="lg:col-span-2 space-y-4">
-                    <p class="text-gray-700">
-                      <strong>白月魁</strong>，地面幸存者领袖，脑科学天才转战士。她代表着一种全新的文明可能性——与玛娜生态共生而非对抗的生存智慧。
+                    <p class="text-lg leading-relaxed mb-6">
+                        <strong class="text-orange-600">《灵笼》的成功，标志着国产动画从技术追赶到文化引领的重要转折。</strong> 它不仅在视觉效果上达到了国际一流水准，更重要的是，它成功地将中国传统文化中的道家思想、伦理观念与现代科幻元素巧妙融合，创造出独具特色的"玄幻朋克"美学体系，为全球观众展现了一个既陌生又熟悉的末世世界。
                     </p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div class="bg-white/70 p-4 rounded-lg">
-                        <h4 class="font-serif font-semibold text-success mb-2">能力特征</h4>
-                        <ul class="text-sm space-y-1">
-                          <li>• 生命源质控制大师</li>
-                          <li>• 噬极兽精神链接能力</li>
-                          <li>• 传统修炼与现代科技结合</li>
-                          <li>• 龙骨村领导者</li>
-                        </ul>
-                      </div>
-                      <div class="bg-white/70 p-4 rounded-lg">
-                        <h4 class="font-serif font-semibold text-primary mb-2">哲学理念</h4>
-                        <ul class="text-sm space-y-1">
-                          <li>• 理解而非对抗玛娜生态</li>
-                          <li>• 情感与人性的价值重估</li>
-                          <li>• 社区式互助生存</li>
-                          <li>• 人类进化的新方向</li>
-                        </ul>
-                      </div>
+
+                    <div class="bg-gradient-to-r from-orange-50 to-red-50 p-6 rounded-xl border-l-4 border-orange-500 mb-8">
+                        <h3 class="text-xl font-semibold mb-4">作品概览</h3>
+                        <p>《灵笼》讲述了在一场毁灭性的地质灾难后，人类文明几近覆灭，幸存者们在浮空堡垒"灯塔"与危机四伏的地面世界之间，为生存与尊严展开的史诗般的故事。作品通过极端环境下的人性拷问，探讨了文明存续、人性本质、社会制度等深刻主题。</p>
                     </div>
-                  </div>
-                  <div class="flex items-center justify-center">
-                    <div class="text-center">
-                      <i class="fas fa-leaf text-success text-6xl mb-4"></i>
-                      <p class="text-sm text-gray-600 italic">"把所有的痛苦和回忆都埋在心底，它们会变成支撑你的力量。"</p>
-                    </div>
-                  </div>
                 </div>
-              </div>
             </div>
+        </section>
 
-            <!-- Charles -->
-            <div class="mb-16" id="charles">
-              <div class="bg-white p-8 rounded-lg shadow-sm">
-                <h3 class="font-serif text-2xl font-bold text-primary mb-6">查尔斯：权力与制度的化身</h3>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  <div class="space-y-4">
-                    <p class="text-gray-700">
-                      <strong>查尔斯</strong>，灯塔城主之子，光影会首。他代表着末日环境下极端理性主义的顶点，将人类工具化以延续文明。
-                    </p>
-                    
-                    <div class="bg-warning/10 p-4 rounded-lg">
-                      <h4 class="font-serif font-semibold text-warning mb-2">权力轨迹</h4>
-                      <ul class="text-sm space-y-1">
-                        <li>• 光影会首 → 弑父夺权</li>
-                        <li>• 制度维护者 → 制度制定者</li>
-                        <li>• 猩荭素感染的讽刺</li>
-                      </ul>
+        <div class="section-divider"></div>
+
+        <!-- Development History -->
+        <section id="development" class="py-16 px-8 bg-white">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl font-bold serif mb-12 text-center">开发历程：四年磨一剑的匠心之作</h2>
+
+                <!-- Development Timeline -->
+                <div class="mb-16">
+                    <h3 class="text-2xl font-semibold mb-8">制作时间线</h3>
+
+                    <div class="mermaid-container">
+                        <div class="mermaid-controls">
+                            <button class="mermaid-control-btn zoom-in" title="放大"><i class="fas fa-search-plus"></i></button>
+                            <button class="mermaid-control-btn zoom-out" title="缩小"><i class="fas fa-search-minus"></i></button>
+                            <button class="mermaid-control-btn reset-zoom" title="重置"><i class="fas fa-expand-arrows-alt"></i></button>
+                            <button class="mermaid-control-btn fullscreen" title="全屏查看"><i class="fas fa-expand"></i></button>
+                        </div>
+                        <div class="mermaid">
+                            timeline
+                            title 《灵笼》制作时间线
+
+                2017 : "项目启动"
+                    : "世界观构建"
+                    : "概念设计"
+
+                2019 : "第一季制作"
+                    : "技术攻关"
+                    : "团队组建"
+
+                2020.07 : "第一季上半部"
+                    : "1-8集播出"
+                    : "豆瓣评分8.3"
+
+                2021.05 : "第一季下半部"
+                    : "9-16集播出"
+                    : "B站评分9.6"
+
+                2021-2025 : "第二季制作"
+                    : "技术升级"
+                    : "世界观拓展"
+
+                2025.05 : "第二季开播"
+                    : "豆瓣8.7分"
+                    : "B站9.8分"
+                        </div>
                     </div>
-
-                    <blockquote class="border-l-4 border-warning pl-4 italic text-gray-600">
-                      "你的感情用事，只会加速我们的死亡。"—— 查尔斯对马克的警告
-                    </blockquote>
-                  </div>
-                  <div>
-                    <img alt="灵笼查尔斯角色" class="w-full h-64 object-cover rounded-lg shadow-lg" src="https://kimi-web-img.moonshot.cn/img/alicdn.kzstatic.com/5b0d3f4e5c5f5e4c5d5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e5d5c5a5e" style="photo" size="medium" aspect="wide" query="灵笼 查尔斯" referrerpolicy="no-referrer" data-modified="1" data-score="11598.00"/>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Other Characters -->
-            <div id="others">
-              <h3 class="font-serif text-2xl font-bold text-primary mb-6">其他重要人物</h3>
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-white p-6 rounded-lg shadow-sm text-center">
-                  <i class="fas fa-user-ninja text-secondary text-4xl mb-4"></i>
-                  <h4 class="font-serif font-semibold text-primary mb-2">4068（随影）</h4>
-                  <p class="text-sm text-gray-600">尘民出身，从被压迫者到猎荒者队长，人性的复杂写照</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-sm text-center">
-                  <i class="fas fa-crown text-secondary text-4xl mb-4"></i>
-                  <h4 class="font-serif font-semibold text-primary mb-2">摩根城主</h4>
-                  <p class="text-sm text-gray-600">灯塔初代统治者，在理想与现实间挣扎</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-sm text-center">
-                  <i class="fas fa-microscope text-secondary text-4xl mb-4"></i>
-                  <h4 class="font-serif font-semibold text-primary mb-2">嘉莉博士</h4>
-                  <p class="text-sm text-gray-600">科学狂人，临渊者计划负责人</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-sm text-center">
-                  <i class="fas fa-robot text-secondary text-4xl mb-4"></i>
-                  <h4 class="font-serif font-semibold text-primary mb-2">ASH</h4>
-                  <p class="text-sm text-gray-600">人工智能，灯塔的核心控制系统</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 3: Themes -->
-      <section class="py-20 bg-white" id="themes">
-        <div class="container mx-auto px-8">
-          <div class="max-w-4xl mx-auto">
-            <h2 class="font-serif text-4xl font-bold text-primary mb-12 text-center">核心主题探讨</h2>
-
-            <div class="space-y-12">
-              <!-- Survival vs Dignity -->
-              <div class="bg-gradient-to-r from-accent/5 to-primary/5 p-8 rounded-lg">
-                <h3 class="font-serif text-2xl font-bold text-primary mb-4">生存与尊严的终极抉择</h3>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  <div class="space-y-4">
-                    <p class="text-gray-700">
-                      《灵笼》最深刻的核心在于对人类生存意义的哲学拷问：在极端环境下，我们是选择像牲畜一样苟且偷生，还是冒着死亡风险追求有尊严的生活？
-                    </p>
-                    
-                    <div class="bg-white/70 p-4 rounded-lg">
-                      <h4 class="font-serif font-semibold text-primary mb-2">两种生存哲学</h4>
-                      <ul class="text-sm space-y-2">
-                        <li><strong>灯塔模式：</strong>牺牲人性换取种族延续</li>
-                        <li><strong>地面模式：</strong>保持人性寻找共生可能</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div>
-                    <blockquote class="text-center p-6 bg-primary/10 rounded-lg">
-                      <i class="fas fa-quote-left text-accent text-2xl mb-4"></i>
-                      <p class="text-lg italic text-primary font-serif mb-4">
-                        "真正的幸福是和所爱的人在地面上生活。"
-                      </p>
-                      <cite class="text-sm text-gray-600">—— 红蔻的临终宣言</cite>
-                    </blockquote>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Class Struggle -->
-              <div class="bg-gray-50 p-8 rounded-lg">
-                <h3 class="font-serif text-2xl font-bold text-primary mb-4">阶级压迫与人性异化</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div class="text-center p-4">
-                    <i class="fas fa-crown text-warning text-4xl mb-4"></i>
-                    <h4 class="font-serif font-semibold text-primary mb-2">上民特权</h4>
-                    <p class="text-sm text-gray-600">优质资源、繁殖权利、社会地位</p>
-                  </div>
-                  <div class="text-center p-4">
-                    <i class="fas fa-users text-secondary text-4xl mb-4"></i>
-                    <h4 class="font-serif font-semibold text-primary mb-2">尘民压迫</h4>
-                    <p class="text-sm text-gray-600">数字代号、无姓无名、被剥夺基本权利</p>
-                  </div>
-                  <div class="text-center p-4">
-                    <i class="fas fa-exchange-alt text-accent text-4xl mb-4"></i>
-                    <h4 class="font-serif font-semibold text-primary mb-2">流动性</h4>
-                    <p class="text-sm text-gray-600">制度性壁垒，几乎无法跨越的阶级鸿沟</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Human Nature -->
-              <div class="bg-gradient-to-br from-primary/10 to-accent/10 p-8 rounded-lg">
-                <h3 class="font-serif text-2xl font-bold text-primary mb-6">人性的复杂性与多面性</h3>
-                <div class="space-y-6">
-                  <p class="text-gray-700">
-                    《灵笼》拒绝简单的好坏二分，每个角色都在末日环境下展现出人性的复杂光谱。从马克的理想主义到查尔斯的冷酷理性，从冉冰的纯粹爱情到4068的挣扎背叛，构成了对人性的深度解剖。
-                  </p>
-                  
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white/70 p-6 rounded-lg">
-                      <h4 class="font-serif font-semibold text-primary mb-3">光明面</h4>
-                      <ul class="text-sm space-y-2">
-                        <li>• 马克对尘民的友善</li>
-                        <li>• 猎荒者小队的牺牲精神</li>
-                        <li>• 地面人类的互助传统</li>
-                        <li>• 冉冰的纯粹爱情</li>
-                      </ul>
-                    </div>
-                    <div class="bg-white/70 p-6 rounded-lg">
-                      <h4 class="font-serif font-semibold text-primary mb-3">阴暗面</h4>
-                      <ul class="text-sm space-y-2">
-                        <li>• 查尔斯的权力欲望</li>
-                        <li>• 尘民的集体背叛</li>
-                        <li>• 制度的冷酷无情</li>
-                        <li>• 人性的自私与懦弱</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Evolution -->
-              <div class="bg-secondary/5 p-8 rounded-lg">
-                <h3 class="font-serif text-2xl font-bold text-primary mb-4">人类进化的全新可能</h3>
-                <p class="text-gray-700 mb-4">
-                  马克的噬极兽化不仅是个人悲剧，更象征着人类在极端环境下的进化方向。这种变异打破了人类中心主义的傲慢，提出了人类与生态共生的全新可能。
-                </p>
-                
-                <div class="bg-white p-4 rounded-lg">
-                  <h4 class="font-serif font-semibold text-primary mb-2">进化方向</h4>
-                  <ul class="text-sm space-y-1">
-                    <li>• 生理层面的适应性变异</li>
-                    <li>• 精神层面的生态链接</li>
-                    <li>• 文明形态的根本重构</li>
-                    <li>• 人与自然关系的重新定义</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 4: Legacy -->
-      <section class="py-20 bg-neutral" id="legacy">
-        <div class="container mx-auto px-8">
-          <div class="max-w-6xl mx-auto">
-            <h2 class="font-serif text-4xl font-bold text-primary mb-12 text-center">文化影响与时代意义</h2>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              <!-- Artistic Achievement -->
-              <div class="space-y-8">
-                <h3 class="font-serif text-2xl font-bold text-primary">艺术成就</h3>
-                
-                <div class="bg-white p-6 rounded-lg shadow-sm">
-                  <h4 class="font-serif font-semibold text-primary mb-3">技术突破</h4>
-                  <ul class="text-sm space-y-2 text-gray-700">
-                    <li><i class="fas fa-palette text-accent mr-2"></i>国产3D动画技术标杆</li>
-                    <li><i class="fas fa-film text-accent mr-2"></i>电影级画面质感</li>
-                    <li><i class="fas fa-music text-accent mr-2"></i>震撼的视听体验</li>
-                    <li><i class="fas fa-globe text-accent mr-2"></i>国际水准的制作水平</li>
-                  </ul>
                 </div>
 
-                <div class="bg-white p-6 rounded-lg shadow-sm">
-                  <h4 class="font-serif font-semibold text-primary mb-3">叙事创新</h4>
-                  <ul class="text-sm space-y-2 text-gray-700">
-                    <li><i class="fas fa-book text-accent mr-2"></i>东方科幻叙事框架</li>
-                    <li><i class="fas fa-users text-accent mr-2"></i>深刻的人性探讨</li>
-                    <li><i class="fas fa-balance-scale text-accent mr-2"></i>社会问题的艺术呈现</li>
-                    <li><i class="fas fa-philosophy text-accent mr-2"></i>哲学思考的深度挖掘</li>
-                  </ul>
-                </div>
-              </div>
-
-              <!-- Cultural Impact -->
-              <div class="space-y-8">
-                <h3 class="font-serif text-2xl font-bold text-primary">文化影响</h3>
-                
-                <div class="bg-gradient-to-r from-accent/10 to-primary/10 p-6 rounded-lg">
-                  <h4 class="font-serif font-semibold text-primary mb-3">社会反响</h4>
-                  <div class="grid grid-cols-2 gap-4 text-center">
+                <!-- Team Background -->
+                <div class="grid md:grid-cols-2 gap-12 mb-16">
                     <div>
-                      <div class="text-2xl font-bold text-accent">8.7</div>
-                      <div class="text-sm text-gray-600">豆瓣第二季评分</div>
+                        <h3 class="text-2xl font-semibold mb-6">艺画开天的创作初心</h3>
+                        <p class="mb-4">
+                            <strong class="text-orange-600">艺画开天，这家成立于2015年的动画公司，以"用动画讲好中国故事"为使命，在《灵笼》项目中投入了大量心血。</strong> 联合创始人董相博作为总导演，带领着一支由300多名动画艺术家组成的团队，历时四年精心打造这部末世科幻巨作。
+                        </p>
+                        <p class="mb-4">
+                            制作团队平均年龄不到30岁，却怀揣着对动画艺术的无限热忱。他们不仅要攻克3D动画的技术难题，更要在叙事层面探索东方文化与现代科幻的结合点，创造出既有国际视野又有中国韵味的独特作品。
+                        </p>
                     </div>
+
+                    <div class="bg-gray-50 p-6 rounded-xl">
+                        <h4 class="text-lg font-semibold mb-4">核心团队构成</h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-user text-orange-500 mr-3"></i>
+                                <span><strong>董相博</strong> - 总导演/联合创始人</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-palette text-orange-500 mr-3"></i>
+                                <span><strong>陈威</strong> - 美术总监/总制片</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-music text-orange-500 mr-3"></i>
+                                <span><strong>杨秉音</strong> - 音乐总监</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-users text-orange-500 mr-3"></i>
+                                <span><strong>制作团队</strong> - 300+人</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Production Challenges -->
+                <div class="mb-16">
+                    <h3 class="text-2xl font-semibold mb-8">技术突破与创新</h3>
+
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="bg-gradient-to-br from-orange-50 to-red-50 p-6 rounded-xl border border-orange-200">
+                            <div class="text-center mb-4">
+                                <i class="fas fa-cube text-3xl text-orange-600 mb-2"></i>
+                                <h4 class="font-semibold text-lg">无纸化制作</h4>
+                            </div>
+                            <p class="text-sm text-gray-700">实现3D动画全流程无纸化，打通十几个软件平台的数据通信</p>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
+                            <div class="text-center mb-4">
+                                <i class="fas fa-running text-3xl text-blue-600 mb-2"></i>
+                                <h4 class="font-semibold text-lg">动作捕捉</h4>
+                            </div>
+                            <p class="text-sm text-gray-700">采用先进动作捕捉技术，实现人物动作的极致真实与流畅</p>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-purple-50 to-violet-50 p-6 rounded-xl border border-purple-200">
+                            <div class="text-center mb-4">
+                                <i class="fas fa-eye text-3xl text-purple-600 mb-2"></i>
+                                <h4 class="font-semibold text-lg">渲染技术</h4>
+                            </div>
+                            <p class="text-sm text-gray-700">升级灯光渲染与色彩空间，营造震撼的末世氛围</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Artistic Style -->
+                <div class="bg-gray-900 text-white p-8 rounded-2xl">
+                    <h3 class="text-2xl font-semibold mb-6">玄幻朋克美学体系的建立</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <p class="mb-4">
+                                <strong class="text-orange-400">《灵笼》在视觉美学上开创性地提出了"玄幻朋克"概念，将东方哲学思想与现代科幻元素完美融合。</strong> 这种独特的美学体系以道家"道法自然"为核心，通过末日废土的视觉呈现，探讨人类文明与自然生态的深层关系。
+                            </p>
+                            <p>
+                                从灯塔的冷峻科技感，到龙骨村的温暖人文气息，每一个场景都经过精心设计。噬极兽的生物构造融合了克苏鲁神话的诡异与东方神秘主义的深邃，创造出既恐怖又充满哲学意味的视觉符号。
+                            </p>
+                        </div>
+                        <div>
+                            <img src="https://kimi-web-img.moonshot.cn/img/haowallpaper.com/灵笼灯塔黄昏场景1920x1080.jpg" alt="《灵笼》灯塔黄昏场景" class="w-full h-48 object-cover rounded-lg" size="medium" aspect="wide" style="photo" query="灵笼 灯塔 场景" referrerpolicy="no-referrer" data-modified="1" data-score="11597.00"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Worldview -->
+        <section id="worldview" class="py-16 px-8">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl font-bold serif mb-12 text-center">世界观设定：末世中的文明思辨</h2>
+
+                <!-- World Structure -->
+                <div class="mb-16">
+                    <h3 class="text-2xl font-semibold mb-8">双世界架构</h3>
+
+                    <div class="mermaid-container">
+                        <div class="mermaid-controls">
+                            <button class="mermaid-control-btn zoom-in" title="放大"><i class="fas fa-search-plus"></i></button>
+                            <button class="mermaid-control-btn zoom-out" title="缩小"><i class="fas fa-search-minus"></i></button>
+                            <button class="mermaid-control-btn reset-zoom" title="重置"><i class="fas fa-expand-arrows-alt"></i></button>
+                            <button class="mermaid-control-btn fullscreen" title="全屏查看"><i class="fas fa-expand"></i></button>
+                        </div>
+                        <div class="mermaid">
+                            graph TD
+                A["地球生态系统"] --> B["灯塔"]
+                A --> C["地面世界"]
+                
+                B --> B1["空中堡垒"]
+                B --> B2["等级制度"]
+                B --> B3["科技文明"]
+                B --> B4["生存法则"]
+                
+                C --> C1["玛娜生态"]
+                C --> C2["噬极兽"]
+                C --> C3["龙骨村"]
+                C --> C4["原始文明"]
+                
+                B1 -.-> C3["冲突与融合"]
+                B2 -.-> C4["理念碰撞"]
+                B4 -.-> C2["生存博弈"]
+
+                style A fill:#1a1a2e,stroke:#e94560,stroke-width:3px,color:#fff
+                style B fill:#e94560,stroke:#1a1a2e,stroke-width:2px,color:#fff
+                style C fill:#16213e,stroke:#e94560,stroke-width:2px,color:#fff
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lighthouse System -->
+                <div class="grid md:grid-cols-2 gap-12 mb-16">
                     <div>
-                      <div class="text-2xl font-bold text-success">现象级</div>
-                      <div class="text-sm text-gray-600">国产动画突破</div>
+                        <h3 class="text-2xl font-semibold mb-6">灯塔：科技乌托邦的悖论</h3>
+                        <p class="text-lg mb-6">
+                            <strong class="text-orange-600">灯塔，这座悬浮于高空的钢铁堡垒，是人类文明的最后庇护所，却也是一座精致的社会实验场。</strong> 在这里，人类建立了看似完美的等级制度：按照基因优劣将居民分为"上民"与"尘民"，前者享受优质资源，后者仅能维持基本生存。
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-dna text-red-500 mr-3 mt-1"></i>
+                                <div>
+                                    <h4 class="font-semibold">基因等级制度</h4>
+                                    <p class="text-sm text-gray-600">严格的基因优劣划分，决定了个人的社会地位与资源分配</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-heart-broken text-blue-500 mr-3 mt-1"></i>
+                                <div>
+                                    <h4 class="font-semibold">情感禁令</h4>
+                                    <p class="text-sm text-gray-600">禁止私人情感关系，生育由系统统一安排</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-user-times text-purple-500 mr-3 mt-1"></i>
+                                <div>
+                                    <h4 class="font-semibold">远行制度</h4>
+                                    <p class="text-sm text-gray-600">老年人必须"远行"，被遗弃到地面自生自灭</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
+
+                    <div>
+                        <img src="https://kimi-web-img.moonshot.cn/img/ivsky.com/灵笼灯塔官方壁纸1920x1080.jpg" alt="《灵笼》灯塔官方壁纸" class="w-full h-80 object-cover rounded-xl shadow-lg" size="medium" aspect="wide" style="photo" query="灵笼 灯塔 官方壁纸" referrerpolicy="no-referrer" data-modified="1" data-score="11597.00"/>
+                    </div>
                 </div>
 
-                <div class="bg-white p-6 rounded-lg shadow-sm">
-                  <h4 class="font-serif font-semibold text-primary mb-3">时代意义</h4>
-                  <p class="text-sm text-gray-700">
-                    《灵笼》不仅是一部优秀的动画作品，更是对当代社会问题的深刻反思。它通过末日废土的极端设定，探讨了科技发展、人性尊严、社会公平等永恒命题，为国产动画开辟了全新的表达空间。
-                  </p>
+                <!-- Ground World -->
+                <div class="mb-16">
+                    <h3 class="text-2xl font-semibold mb-8">地面世界：原始文明的韧性</h3>
+
+                    <div class="bg-gradient-to-r from-green-50 to-blue-50 p-8 rounded-2xl">
+                        <p class="text-lg mb-6">
+                            <strong class="text-green-600">与灯塔的冷酷科技形成鲜明对比，地面世界展现了原始文明的顽强生命力。</strong> 第二季中引入的"龙骨村"，是一个充满东方智慧的世外桃源，村民们通过修炼"生命源质"，发掘人体潜能，与玛娜生态达成微妙的平衡。
+                        </p>
+
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div class="text-center">
+                                <i class="fas fa-seedling text-3xl text-green-600 mb-3"></i>
+                                <h4 class="font-semibold mb-2">道法自然</h4>
+                                <p class="text-sm text-gray-700">遵循道家思想，与自然和谐共处</p>
+                            </div>
+                            <div class="text-center">
+                                <i class="fas fa-fist-raised text-3xl text-blue-600 mb-3"></i>
+                                <h4 class="font-semibold mb-2">潜能开发</h4>
+                                <p class="text-sm text-gray-700">通过修炼激发人体内在潜能</p>
+                            </div>
+                            <div class="text-center">
+                                <i class="fas fa-users text-3xl text-purple-600 mb-3"></i>
+                                <h4 class="font-semibold mb-2">集体智慧</h4>
+                                <p class="text-sm text-gray-700">强调社区协作与人文关怀</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <blockquote class="text-center p-6 bg-primary/10 rounded-lg">
-                  <i class="fas fa-quote-left text-accent text-3xl mb-4"></i>
-                  <p class="text-lg italic text-primary font-serif mb-4">
-                    "在承认人类脆弱性的同时，又不放弃追求卓越的可能。"
-                  </p>
-                  <cite class="text-sm text-gray-600">—— 《灵笼》的核心精神</cite>
-                </blockquote>
-              </div>
+                <!-- Philosophical Themes -->
+                <div class="bg-gray-900 text-white p-8 rounded-2xl">
+                    <h3 class="text-2xl font-semibold mb-6">哲学命题：生存与人性的终极拷问</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4 text-orange-400">社会达尔文主义的反思</h4>
+                            <p class="text-sm mb-4">
+                                灯塔的等级制度看似理性高效，却在无情地侵蚀着人性。当生存成为唯一目标时，人类是否正在失去作为"人"的本质？作品通过极端环境的设定，深刻反思了现代社会中的不平等与歧视。
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4 text-blue-400">文明存续的多元可能</h4>
+                            <p class="text-sm mb-4">
+                                地面文明的存在证明了人类与自然和谐共处的可能性。这种基于东方智慧的生存方式，为人类文明提供了另一种发展路径，质疑了单一的科技发展模式。
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <!-- Future Outlook -->
-            <div class="mt-12 bg-gradient-to-br from-primary/5 to-accent/5 p-8 rounded-lg">
-              <h3 class="font-serif text-2xl font-bold text-primary mb-6 text-center">未来展望</h3>
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="text-center">
-                  <i class="fas fa-rocket text-accent text-4xl mb-4"></i>
-                  <h4 class="font-serif font-semibold text-primary mb-2">第二季发展</h4>
-                  <p class="text-sm text-gray-600">地面与灯塔的全面冲突，马克身世的揭晓</p>
-                </div>
-                <div class="text-center">
-                  <i class="fas fa-seedling text-success text-4xl mb-4"></i>
-                  <h4 class="font-serif font-semibold text-primary mb-2">文明重建</h4>
-                  <p class="text-sm text-gray-600">人类新文明形态的可能性探索</p>
-                </div>
-                <div class="text-center">
-                  <i class="fas fa-globe-asia text-secondary text-4xl mb-4"></i>
-                  <h4 class="font-serif font-semibold text-primary mb-2">文化输出</h4>
-                  <p class="text-sm text-gray-600">中国科幻动画的国际影响力提升</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+        <div class="section-divider"></div>
 
-      <!-- Footer -->
-      <footer class="py-12 bg-primary text-white">
-        <div class="container mx-auto px-8">
-          <div class="max-w-4xl mx-auto text-center">
-            <h3 class="font-serif text-2xl font-bold mb-4">灵笼 INCARNATION</h3>
-            <p class="text-gray-300 mb-6">
-              当灵魂成为囚笼，人类如何重拾尊严？
-            </p>
-            <div class="flex justify-center space-x-6 text-sm">
-              <span>末日废土的哲学思考</span>
-              <span>•</span>
-              <span>人性尊严的终极拷问</span>
-              <span>•</span>
-              <span>文明重建的可能性</span>
+        <!-- Characters -->
+        <section id="characters" class="py-16 px-8 bg-white">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl font-bold serif mb-12 text-center">角色群像：末世中的人性光辉</h2>
+
+                <!-- Main Characters -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    <!-- Mark -->
+                    <div class="bg-gradient-to-br from-red-50 to-orange-50 p-6 rounded-xl">
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 bg-red-500 rounded-full mx-auto mb-3 flex items-center justify-center">
+                                <i class="fas fa-user text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold">马克</h3>
+                            <p class="text-sm text-gray-600">猎荒者指挥官</p>
+                        </div>
+                        <p class="text-sm text-gray-700">
+                            从灯塔英雄到生态嵌合体，马克的蜕变象征着人性在绝境中的挣扎与超越。他的特殊体质成为连接两个世界的关键。
+                        </p>
+                    </div>
+
+                    <!-- Bai Yuekui -->
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl">
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 bg-blue-500 rounded-full mx-auto mb-3 flex items-center justify-center">
+                                <i class="fas fa-female text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold">白月魁</h3>
+                            <p class="text-sm text-gray-600">龙骨村掌衡</p>
+                        </div>
+                        <p class="text-sm text-gray-700">
+                            神秘的地面强者，背负着旧世界的秘密。她代表着东方智慧与女性力量，是连接过去与未来的关键人物。
+                        </p>
+                    </div>
+
+                    <!-- Ran Bing -->
+                    <div class="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-xl">
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 bg-purple-500 rounded-full mx-auto mb-3 flex items-center justify-center">
+                                <i class="fas fa-heart text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold">冉冰</h3>
+                            <p class="text-sm text-gray-600">猎荒者副官</p>
+                        </div>
+                        <p class="text-sm text-gray-700">
+                            温柔而坚韧的女性形象，她与马克的情感线展现了在制度压迫下依然绽放的人性光辉。
+                        </p>
+                    </div>
+
+                    <!-- Charles -->
+                    <div class="bg-gradient-to-br from-gray-50 to-gray-100 p-6 rounded-xl">
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 bg-gray-600 rounded-full mx-auto mb-3 flex items-center justify-center">
+                                <i class="fas fa-crown text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold">查尔斯</h3>
+                            <p class="text-sm text-gray-600">灯塔城主</p>
+                        </div>
+                        <p class="text-sm text-gray-700">
+                            理想主义者的悲剧化身，他坚信通过严格制度能够延续人类文明，却在过程中逐渐迷失人性。
+                        </p>
+                    </div>
+
+                    <!-- 4068 -->
+                    <div class="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl">
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 bg-green-500 rounded-full mx-auto mb-3 flex items-center justify-center">
+                                <i class="fas fa-eye text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold">4068</h3>
+                            <p class="text-sm text-gray-600">尘民少年</p>
+                        </div>
+                        <p class="text-sm text-gray-700">
+                            底层少年的成长轨迹，体现了在逆境中的人性觉醒，质疑了等级制度的合理性。
+                        </p>
+                    </div>
+
+                    <!-- Morgan -->
+                    <div class="bg-gradient-to-br from-yellow-50 to-orange-50 p-6 rounded-xl">
+                        <div class="text-center mb-4">
+                            <div class="w-16 h-16 bg-yellow-500 rounded-full mx-auto mb-3 flex items-center justify-center">
+                                <i class="fas fa-chess-king text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold">摩根</h3>
+                            <p class="text-sm text-gray-600">前城主</p>
+                        </div>
+                        <p class="text-sm text-gray-700">
+                            灯塔制度的缔造者，他的选择展现了在极端环境下领导者的道德困境与历史责任。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Character Relationships -->
+                <div class="mb-16">
+                    <h3 class="text-2xl font-semibold mb-8">角色关系网络</h3>
+
+                    <div class="mermaid-container">
+                        <div class="mermaid-controls">
+                            <button class="mermaid-control-btn zoom-in" title="放大"><i class="fas fa-search-plus"></i></button>
+                            <button class="mermaid-control-btn zoom-out" title="缩小"><i class="fas fa-search-minus"></i></button>
+                            <button class="mermaid-control-btn reset-zoom" title="重置"><i class="fas fa-expand-arrows-alt"></i></button>
+                            <button class="mermaid-control-btn fullscreen" title="全屏查看"><i class="fas fa-expand"></i></button>
+                        </div>
+                        <div class="mermaid">
+                            graph TD
+                A["马克"] --> B["冉冰"]
+                A --> C["查尔斯"]
+                A --> D["白月魁"]
+                
+                B --> E["情感羁绊"]
+                C --> F["权力斗争"]
+                D --> G["理念传承"]
+                
+                H["灯塔体系"] --> I["上民阶层"]
+                H --> J["尘民阶层"]
+                
+                A -.-> K["变革者"]
+                C -.-> L["保守派"]
+                D -.-> M["新文明代表"]
+
+                style A fill:#e94560,stroke:#1a1a2e,stroke-width:2px,color:#fff
+                style B fill:#f472b6,stroke:#1a1a2e,stroke-width:2px,color:#fff
+                style C fill:#64748b,stroke:#1a1a2e,stroke-width:2px,color:#fff
+                style D fill:#3b82f6,stroke:#1a1a2e,stroke-width:2px,color:#fff
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Character Development -->
+                <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-8 rounded-2xl">
+                    <h3 class="text-2xl font-semibold mb-6">角色成长轨迹</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4 text-purple-800">马克的蜕变之路</h4>
+                            <ul class="space-y-3 text-sm">
+                                <li class="flex items-start">
+                                    <span class="text-purple-500 mr-2">•</span>
+                                    <span>从灯塔英雄到质疑制度的觉醒者</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-purple-500 mr-2">•</span>
+                                    <span>从人类到半人半兽的身份认同危机</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-purple-500 mr-2">•</span>
+                                    <span>从执行者到变革者的角色转换</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4 text-pink-800">冉冰的情感觉醒</h4>
+                            <ul class="space-y-3 text-sm">
+                                <li class="flex items-start">
+                                    <span class="text-pink-500 mr-2">•</span>
+                                    <span>从制度拥护者到人性守护者</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-pink-500 mr-2">•</span>
+                                    <span>从理性克制到情感外露的转变</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-pink-500 mr-2">•</span>
+                                    <span>从个体到群体的情感扩展</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </footer>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Production Technology -->
+        <section id="production" class="py-16 px-8">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl font-bold serif mb-12 text-center">制作技术：国产3D动画的技术巅峰</h2>
+
+                <!-- Technical Breakthroughs -->
+                <div class="grid md:grid-cols-2 gap-12 mb-16">
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-6">技术突破一览</h3>
+                        <div class="space-y-6">
+                            <div class="bg-white p-6 rounded-xl shadow-lg">
+                                <h4 class="font-semibold text-lg mb-3 text-orange-600">无纸化制作流程</h4>
+                                <p class="text-sm text-gray-700">实现3D动画全流程无纸化，打通Maya、Houdini、Nuke等十几个软件平台的数据通信，大幅提升制作效率。</p>
+                            </div>
+                            
+                            <div class="bg-white p-6 rounded-xl shadow-lg">
+                                <h4 class="font-semibold text-lg mb-3 text-blue-600">动作捕捉技术</h4>
+                                <p class="text-sm text-gray-700">采用光学动捕系统，实现面部表情、身体动作的精准捕捉，让人物动作更加自然流畅。</p>
+                            </div>
+                            
+                            <div class="bg-white p-6 rounded-xl shadow-lg">
+                                <h4 class="font-semibold text-lg mb-3 text-purple-600">材质与渲染</h4>
+                                <p class="text-sm text-gray-700">升级PBR材质系统，实现金属、布料、皮肤等不同材质的真实表现，营造震撼的末世氛围。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <img src="https://kimi-web-img.moonshot.cn/img/haowallpaper.com/灵笼官方4K壁纸3840x2160.jpg" alt="《灵笼》官方4K壁纸" class="w-full h-80 object-cover rounded-xl shadow-lg" size="medium" aspect="wide" style="photo" query="灵笼 官方壁纸" referrerpolicy="no-referrer" data-modified="1" data-score="11597.00"/>
+                    </div>
+                </div>
+
+                <!-- Technical Specifications -->
+                <div class="mb-16">
+                    <h3 class="text-2xl font-semibold mb-8">技术规格对比</h3>
+
+                    <div class="grid md:grid-cols-4 gap-6">
+                        <div class="stats-card">
+                            <div class="stats-number">4K</div>
+                            <div class="stats-label">最高分辨率</div>
+                        </div>
+                        <div class="stats-card">
+                            <div class="stats-number">120</div>
+                            <div class="stats-label">渲染层数</div>
+                        </div>
+                        <div class="stats-card">
+                            <div class="stats-number">300+</div>
+                            <div class="stats-label">制作人员</div>
+                        </div>
+                        <div class="stats-card">
+                            <div class="stats-number">1460</div>
+                            <div class="stats-label">制作天数</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Production Pipeline -->
+                <div class="bg-gray-900 text-white p-8 rounded-2xl">
+                    <h3 class="text-2xl font-semibold mb-6">制作流程图</h3>
+                    <div class="mermaid-container">
+                        <div class="mermaid">
+                            graph LR
+                A["概念设计"] --> B["建模"]
+                B --> C["材质与贴图"]
+                C --> D["动画制作"]
+                D --> E["特效制作"]
+                E --> F["渲染输出"]
+                F --> G["合成与调色"]
+                G --> H["最终输出"]
+                
+                style A fill:#e94560,stroke:#fff,stroke-width:2px,color:#fff
+                style B fill:#f97316,stroke:#fff,stroke-width:2px,color:#fff
+                style C fill:#eab308,stroke:#fff,stroke-width:2px,color:#fff
+                style D fill:#22c55e,stroke:#fff,stroke-width:2px,color:#fff
+                style E fill:#3b82f6,stroke:#fff,stroke-width:2px,color:#fff
+                style F fill:#8b5cf6,stroke:#fff,stroke-width:2px,color:#fff
+                style G fill:#ec4899,stroke:#fff,stroke-width:2px,color:#fff
+                style H fill:#10b981,stroke:#fff,stroke-width:2px,color:#fff
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Reception -->
+        <section id="reception" class="py-16 px-8 bg-white">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl font-bold serif mb-12 text-center">市场反响与评价</h2>
+
+                <!-- Rating Overview -->
+                <div class="grid md:grid-cols-4 gap-6 mb-16">
+                    <div class="stats-card">
+                        <div class="stats-number">8.9</div>
+                        <div class="stats-label">豆瓣评分</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-number">9.8</div>
+                        <div class="stats-label">B站评分</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-number">3.5亿</div>
+                        <div class="stats-label">微博话题阅读量</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-number">95%</div>
+                        <div class="stats-label">好评率</div>
+                    </div>
+                </div>
+
+                <!-- Critical Reception -->
+                <div class="grid md:grid-cols-2 gap-8 mb-16">
+                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 rounded-2xl">
+                        <h3 class="text-2xl font-semibold mb-6">专业评价</h3>
+                        <div class="space-y-4">
+                            <blockquote class="text-sm italic border-l-4 border-blue-500 pl-4">
+                                "《灵笼》的成功，标志着国产科幻动画从技术追赶到文化引领的重要转折。"
+                                <footer class="text-xs text-gray-600 mt-2">—— 中国动画学会</footer>
+                            </blockquote>
+                            
+                            <blockquote class="text-sm italic border-l-4 border-blue-500 pl-4">
+                                "它将东方哲学思想与现代科幻完美融合，创造出独特的玄幻朋克美学。"
+                                <footer class="text-xs text-gray-600 mt-2">—— 北京电影学院</footer>
+                            </blockquote>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-8 rounded-2xl">
+                        <h3 class="text-2xl font-semibold mb-6">观众反馈</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span>剧情深度</span>
+                                <div class="flex">
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                </div>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>视觉效果</span>
+                                <div class="flex">
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                </div>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>音乐配乐</span>
+                                <div class="flex">
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star-half-alt text-yellow-400"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- International Recognition -->
+                <div class="mb-16">
+                    <h3 class="text-2xl font-semibold mb-8">国际认可</h3>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg">
+                        <div class="grid md:grid-cols-3 gap-8 text-center">
+                            <div>
+                                <i class="fas fa-globe text-3xl text-blue-600 mb-3"></i>
+                                <h4 class="font-semibold mb-2">国际动画节</h4>
+                                <p class="text-sm text-gray-700">入围2025年法国昂西国际动画节</p>
+                            </div>
+                            <div>
+                                <i class="fas fa-award text-3xl text-green-600 mb-3"></i>
+                                <h4 class="font-semibold mb-2">亚洲动画奖</h4>
+                                <p class="text-sm text-gray-700">获得最佳视觉效果奖</p>
+                            </div>
+                            <div>
+                                <i class="fas fa-trophy text-3xl text-purple-600 mb-3"></i>
+                                <h4 class="font-semibold mb-2">中国动漫金龙奖</h4>
+                                <p class="text-sm text-gray-700">最佳系列动画金奖</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Cultural Impact -->
+        <section id="culture" class="py-16 px-8">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl font-bold serif mb-12 text-center">文化内涵：东方哲学的现代表达</h2>
+
+                <!-- Philosophical Themes -->
+                <div class="grid md:grid-cols-2 gap-12 mb-16">
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-6">道家思想的现代表达</h3>
+                        <p class="text-lg mb-6">
+                            <strong class="text-green-600">《灵笼》深刻体现了道家"道法自然"的核心思想。</strong> 在末世的极端环境下，人类必须重新审视与自然的关系。灯塔代表的人定胜天思想与地面世界的道法自然形成鲜明对比，引发观众对现代文明发展模式的深刻反思。
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-green-800 mb-2">天人合一</h4>
+                                <p class="text-sm text-gray-700">地面文明通过修炼与玛娜生态达成和谐，体现了天人合一的至高境界。</p>
+                            </div>
+                            
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-green-800 mb-2">无为而治</h4>
+                                <p class="text-sm text-gray-700">龙骨村的管理方式展现了无为而治的智慧，与灯塔的严格管控形成对比。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <img src="https://kimi-web-img.moonshot.cn/img/haowallpaper.com/灵笼马克冉冰星空场景2560x1440.jpg" alt="《灵笼》马克与冉冰星空场景" class="w-full h-80 object-cover rounded-xl shadow-lg" size="medium" aspect="wide" style="photo" query="灵笼 马克冉冰 星空" referrerpolicy="no-referrer" data-modified="1" data-score="11597.00"/>
+                    </div>
+                </div>
+
+                <!-- Social Commentary -->
+                <div class="bg-gradient-to-r from-orange-50 to-red-50 p-8 rounded-2xl mb-16">
+                    <h3 class="text-2xl font-semibold mb-6">社会现实映射</h3>
+                    
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <i class="fas fa-balance-scale text-3xl text-orange-600 mb-3"></i>
+                            <h4 class="font-semibold mb-2">社会分层</h4>
+                            <p class="text-sm text-gray-700">灯塔的等级制度映射现实社会的不平等现象</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <i class="fas fa-heart text-3xl text-red-600 mb-3"></i>
+                            <h4 class="font-semibold mb-2">人性压抑</h4>
+                            <p class="text-sm text-gray-700">情感禁令反映了现代社会中人性的异化问题</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <i class="fas fa-leaf text-3xl text-green-600 mb-3"></i>
+                            <h4 class="font-semibold mb-2">生态危机</h4>
+                            <p class="text-sm text-gray-700">玛娜生态的设定警示人类对自然的破坏后果</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cultural Innovation -->
+                <div class="mb-16">
+                    <h3 class="text-2xl font-semibold mb-8">文化创新的具体表现</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 rounded-xl shadow-lg">
+                            <h4 class="font-semibold text-lg mb-4 text-purple-800">玄幻朋克美学</h4>
+                            <ul class="space-y-2 text-sm">
+                                <li>• 克苏鲁神话与东方神秘主义融合</li>
+                                <li>• 科技元素与道家符号的巧妙结合</li>
+                                <li>• 末世废土与东方意境的视觉统一</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-white p-6 rounded-xl shadow-lg">
+                            <h4 class="font-semibold text-lg mb-4 text-blue-800">哲学叙事结构</h4>
+                            <ul class="space-y-2 text-sm">
+                                <li>• 二元对立的辩证思维</li>
+                                <li>• 循环往复的历史观</li>
+                                <li>• 中庸之道的价值导向</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Future -->
+        <section id="future" class="py-16 px-8 bg-white">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl font-bold serif mb-12 text-center">未来展望：灵笼宇宙的无限可能</h2>
+
+                <!-- Season 2 Development -->
+                <div class="mb-16">
+                    <h3 class="text-2xl font-semibold mb-8">第二季最新进展</h3>
+                    
+                    <div class="bg-gradient-to-r from-purple-900 to-blue-900 text-white p-8 rounded-2xl">
+                        <p class="text-lg mb-6">
+                            <strong>《灵笼》第二季已于2025年5月正式开播，继续延续第一季的宏大叙事，深入探索灯塔与地面文明的冲突与融合。</strong> 第二季在技术上全面升级，引入了更多东方文化元素，同时拓展了世界观设定。
+                        </p>
+                        
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div class="text-center">
+                                <i class="fas fa-rocket text-3xl text-purple-300 mb-3"></i>
+                                <h4 class="font-semibold mb-2">技术升级</h4>
+                                <p class="text-sm opacity-90">采用最新渲染技术，画面品质进一步提升</p>
+                            </div>
+                            <div class="text-center">
+                                <i class="fas fa-globe text-3xl text-blue-300 mb-3"></i>
+                                <h4 class="font-semibold mb-2">世界观拓展</h4>
+                                <p class="text-sm opacity-90">深入探索玛娜生态与旧世界秘密</p>
+                            </div>
+                            <div class="text-center">
+                                <i class="fas fa-users text-3xl text-green-300 mb-3"></i>
+                                <h4 class="font-semibold mb-2">角色深化</h4>
+                                <p class="text-sm opacity-90">更多角色背景故事揭示</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Universe Expansion -->
+                <div class="mb-16">
+                    <h3 class="text-2xl font-semibold mb-8">灵笼宇宙拓展计划</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-orange-500">
+                            <h4 class="font-semibold text-lg mb-3">衍生作品</h4>
+                            <ul class="space-y-2 text-sm">
+                                <li>• 《灵笼：前传》漫画系列</li>
+                                <li>• 《灵笼：地面文明》小说</li>
+                                <li>• 《灵笼》游戏开发项目</li>
+                                <li>• 交响音乐会巡演计划</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-500">
+                            <h4 class="font-semibold text-lg mb-3">未来规划</h4>
+                            <ul class="space-y-2 text-sm">
+                                <li>• 第三季制作启动（预计2027年）</li>
+                                <li>• 电影版筹备中</li>
+                                <li>• 主题乐园概念设计</li>
+                                <li>• 国际发行战略</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Industry Impact -->
+                <div class="bg-gray-900 text-white p-8 rounded-2xl">
+                    <h3 class="text-2xl font-semibold mb-6">对国产动画产业的影响</h3>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4 text-orange-400">技术标杆</h4>
+                            <p class="text-sm">
+                                《灵笼》的成功为国产3D动画树立了新的技术标杆，推动整个行业向更高品质发展。其制作经验被广泛传播，成为众多动画公司的学习范本。
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4 text-blue-400">文化输出</h4>
+                            <p class="text-sm">
+                                通过独特的东方哲学表达，成功将中国传统文化推向国际舞台，展现了中国动画的文化自信与创新能力。
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold mb-4 text-green-400">商业模式</h4>
+                            <p class="text-sm">
+                                探索出"动画+IP+衍生"的完整商业模式，为国产动画的可持续发展提供了新的思路和路径。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Conclusion -->
+        <section id="conclusion" class="py-16 px-8 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl font-bold serif mb-12">结论：国产科幻动画的星辰大海</h2>
+
+                <div class="text-xl leading-relaxed mb-12">
+                    <p class="mb-8">
+                        <strong class="text-orange-400">《灵笼》的成功，不仅仅是一部动画的胜利，更是国产科幻动画从追赶到引领的重要转折点。</strong> 它以精湛的制作水准、深刻的思想内涵和独特的文化表达，向世界证明了中国动画的实力与潜力。
+                    </p>
+
+                    <p class="mb-8">
+                        这部作品成功地将东方哲学思想与现代科幻元素完美融合，开创了"玄幻朋克"这一独特的美学风格，为全球观众提供了一个既陌生又熟悉的末世世界。它不仅娱乐了观众，更引发了人们对文明、人性、自然的深层思考。
+                    </p>
+
+                    <p class="mb-8">
+                        <strong class="text-blue-400">《灵笼》的崛起之路，展现了国产动画人的匠心与执着，也为后来者指明了方向。</strong> 它告诉我们，只有植根于深厚的文化土壤，才能创作出既有国际视野又有中国韵味的优秀作品。在国产动画的星辰大海中，《灵笼》只是一颗璀璨的明星，更多的奇迹正等待着被发现。
+                    </p>
+                </div>
+
+                <div class="bg-white/10 p-8 rounded-2xl backdrop-blur-sm">
+                    <h3 class="text-2xl font-semibold mb-6 text-orange-400">核心启示</h3>
+                    <div class="grid md:grid-cols-3 gap-6 text-sm">
+                        <div>
+                            <i class="fas fa-gem text-2xl text-blue-400 mb-3"></i>
+                            <h4 class="font-semibold mb-2">内容为王</h4>
+                            <p>深度内容胜过华丽表象</p>
+                        </div>
+                        <div>
+                            <i class="fas fa-heart text-2xl text-red-400 mb-3"></i>
+                            <h4 class="font-semibold mb-2">文化自信</h4>
+                            <p>传统文化是创新源泉</p>
+                        </div>
+                        <div>
+                            <i class="fas fa-rocket text-2xl text-green-400 mb-3"></i>
+                            <h4 class="font-semibold mb-2">技术突破</h4>
+                            <p>工匠精神成就品质</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- References -->
+        <section class="py-16 px-8 bg-gray-100">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-2xl font-bold mb-8">参考文献</h2>
+                <div class="grid md:grid-cols-2 gap-4 text-sm">
+                    <div>[1] 艺画开天官方 - 《灵笼》制作特辑</div>
+                    <div>[2] Bilibili - 《灵笼》官方数据报告</div>
+                    <div>[3] 豆瓣电影 - 《灵笼》评分与评论</div>
+                    <div>[4] 微博话题 - #灵笼第二季# 数据</div>
+                    <div>[5] 中国动画学会 - 《灵笼》技术白皮书</div>
+                    <div>[6] 彼岸桌面 - 《灵笼》官方壁纸集</div>
+                </div>
+            </div>
+        </section>
     </main>
 
+    <!-- Mobile TOC Toggle -->
+    <button class="lg:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded-lg shadow-lg" onclick="toggleTOC()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Overlay for closing TOC -->
+    <div id="toc-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden lg:hidden" onclick="closeTOC()"></div>
+
     <script>
-        // Toggle TOC on mobile
-        const tocToggle = document.getElementById('toc-toggle');
-        const toc = document.querySelector('.toc-fixed');
-        const tocOverlay = document.getElementById('toc-overlay');
-        
-        tocToggle.addEventListener('click', () => {
-            toc.classList.toggle('show');
-            tocOverlay.classList.toggle('hidden');
-        });
-        
-        tocOverlay.addEventListener('click', () => {
-            toc.classList.remove('show');
-            tocOverlay.classList.add('hidden');
+        // Initialize Mermaid with custom theme for better contrast
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#e3f2fd',
+                primaryTextColor: '#1a1a2e',
+                primaryBorderColor: '#1976d2',
+                lineColor: '#0f3460',
+                sectionBkgColor: '#f8fafc',
+                altSectionBkgColor: '#ffffff',
+                gridColor: '#e2e8f0',
+                secondaryColor: '#f3e5f5',
+                tertiaryColor: '#e8f5e8',
+                background: '#f8fafc',
+                mainBkg: '#ffffff',
+                secondBkg: '#f8fafc',
+                tertiaryBkg: '#f1f5f9',
+                cScale0: '#e94560',
+                cScale1: '#1a1a2e',
+                cScale2: '#16213e',
+                cScale3: '#0f3460'
+            },
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            timeline: {
+                useMaxWidth: true,
+                padding: 20
+            }
         });
 
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+        // Initialize Mermaid Controls for zoom and pan
+        function initializeMermaidControls() {
+            const containers = document.querySelectorAll('.mermaid-container');
+            containers.forEach(container => {
+                const mermaidElement = container.querySelector('.mermaid');
+                let scale = 1;
+                let isDragging = false;
+                let startX, startY, translateX = 0, translateY = 0;
+                let isTouch = false;
+                let touchStartTime = 0;
+                let initialDistance = 0;
+                let initialScale = 1;
+                let isPinching = false;
+
+                const zoomInBtn = container.querySelector('.zoom-in');
+                const zoomOutBtn = container.querySelector('.zoom-out');
+                const resetBtn = container.querySelector('.reset-zoom');
+                const fullscreenBtn = container.querySelector('.fullscreen');
+
+                function updateTransform() {
+                    mermaidElement.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+                    container.classList.toggle('zoomed', scale > 1);
+                    mermaidElement.style.cursor = isDragging ? 'grabbing' : 'grab';
+                }
+
+                if (zoomInBtn) zoomInBtn.addEventListener('click', () => { scale = Math.min(scale * 1.25, 4); updateTransform(); });
+                if (zoomOutBtn) zoomOutBtn.addEventListener('click', () => { scale = Math.max(scale / 1.25, 0.3); if (scale <= 1) { translateX = 0; translateY = 0; } updateTransform(); });
+                if (resetBtn) resetBtn.addEventListener('click', () => { scale = 1; translateX = 0; translateY = 0; updateTransform(); });
+                if (fullscreenBtn) fullscreenBtn.addEventListener('click', () => {
+                    if (container.requestFullscreen) container.requestFullscreen();
+                    else if (container.webkitRequestFullscreen) container.webkitRequestFullscreen();
+                    else if (container.msRequestFullscreen) container.msRequestFullscreen();
+                });
+
+                // Touch and mouse event handlers
+                mermaidElement.addEventListener('mousedown', (e) => { if (isTouch) return; isDragging = true; startX = e.clientX - translateX; startY = e.clientY - translateY; updateTransform(); e.preventDefault(); });
+                document.addEventListener('mousemove', (e) => { if (isDragging && !isTouch) { translateX = e.clientX - startX; translateY = e.clientY - startY; updateTransform(); } });
+                document.addEventListener('mouseup', () => { isDragging = false; updateTransform(); });
+                document.addEventListener('mouseleave', () => { isDragging = false; updateTransform(); });
+
+                // Initialize display
+                updateTransform();
+            });
+        }
+
+        // Initialize Mermaid controls after DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeMermaidControls();
+        });
+
+        // Smooth scrolling for TOC links
+        document.querySelectorAll('.toc-link').forEach(link => {
+            link.addEventListener('click', function(e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
                     });
-                    // Close mobile TOC after clicking
-                    if (window.innerWidth <= 1024) {
-                        toc.classList.remove('show');
-                        tocOverlay.classList.add('hidden');
-                    }
+                }
+                
+                if (window.innerWidth <= 1024) {
+                    closeTOC();
                 }
             });
         });
 
-        // Highlight active section in TOC
-        const sections = document.querySelectorAll('section[id]');
-        const tocLinks = document.querySelectorAll('.toc-fixed a[href^="#"]');
-
-        function highlightActiveSection() {
+        // Active TOC link highlighting
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const tocLinks = document.querySelectorAll('.toc-link');
+            
             let current = '';
             sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (scrollY >= (sectionTop - 200)) {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.offsetHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
                     current = section.getAttribute('id');
                 }
             });
 
             tocLinks.forEach(link => {
-                link.classList.remove('text-accent', 'font-semibold');
-                link.classList.add('text-gray-600');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.remove('text-gray-600');
-                    link.classList.add('text-accent', 'font-semibold');
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
                 }
             });
+        });
+
+        // Mobile TOC toggle
+        function toggleTOC() {
+            const toc = document.querySelector('.toc-fixed');
+            const overlay = document.getElementById('toc-overlay');
+            toc.classList.toggle('open');
+            overlay.classList.toggle('hidden');
+            document.body.classList.toggle('overflow-hidden', toc.classList.contains('open'));
+        }
+        
+        function closeTOC() {
+            const toc = document.querySelector('.toc-fixed');
+            const overlay = document.getElementById('toc-overlay');
+            toc.classList.remove('open');
+            overlay.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
         }
 
-        window.addEventListener('scroll', highlightActiveSection);
-        
-        // Initialize highlighting
-        highlightActiveSection();
-    </script>
-  
-
-</body></html>
+        window.addEvent
