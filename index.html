@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
     <style>
         :root {
             --primary: #1a1a2e;
@@ -486,7 +485,7 @@
                     <h3 class="text-2xl font-semibold mb-8">制作时间线</h3>
 
                     <div class="mermaid-container">
-                        <div class="mermaid" style="cursor:pointer;" onclick="openFullscreen(this)">
+                        <div class="mermaid" style="cursor:pointer;">
                             timeline
                             title 《灵笼》制作时间线
                             2017 : "项目启动" : "世界观构建" : "概念设计"
@@ -596,7 +595,7 @@
                 <div class="mb-16">
                     <h3 class="text-2xl font-semibold mb-8">双世界架构</h3>
                         <div class="mermaid-container">
-                            <div class="mermaid" style="cursor:pointer;" onclick="openFullscreen(this)">
+                            <div class="mermaid" style="cursor:pointer;" >
                                 graph TD
                                 A["地球生态系统"] --> B["灯塔"]
                                 A --> C["地面世界"]
@@ -805,7 +804,7 @@
                     <h3 class="text-2xl font-semibold mb-8">角色关系网络</h3>
 
                     <div class="mermaid-container">
-                         <div class="mermaid" style="cursor:pointer;" onclick="openFullscreen(this)">
+                         <div class="mermaid" style="cursor:pointer;">
                             graph TD
                             A["马克"] --> B["冉冰"]
                             A --> C["查尔斯"]
@@ -933,7 +932,7 @@
                 <div class="bg-gray-900 text-white p-8 rounded-2xl">
                     <h3 class="text-2xl font-semibold mb-6">制作流程图</h3>
                     <div class="mermaid-container">
-                        <div class="mermaid" style="cursor:pointer;" onclick="openFullscreen(this)">
+                        <div class="mermaid" style="cursor:pointer;">
                             graph LR
                 A["概念设计"] --> B["建模"]
                 B --> C["材质与贴图"]
@@ -1203,7 +1202,7 @@
                         <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-500">
                             <h4 class="font-semibold text-lg mb-3">未来规划</h4>
                             <ul class="space-y-2 text-sm">
-                                <li>• 第三季制作启动（预计2026年）</li>
+                                <li>• 第三季制作启动（预计2027年）</li>
                                 <li>• 电影版筹备中</li>
                                 <li>• 主题乐园概念设计</li>
                                 <li>• 国际发行战略</li>
@@ -1324,22 +1323,115 @@ function closeTOC() {
 }
 menuBtn.addEventListener('click', toggleTOC);
 overlay.addEventListener('click', closeTOC);
-
-function openFullscreen(el) {
-  /* 先创建一个干净的容器并设置白底 */
-  const wrapper = document.createElement('div');
-  wrapper.style.cssText =
-    'position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;cursor:pointer';
-  /* 克隆原图，防止样式污染 */
-  const clone = el.cloneNode(true);
-  clone.style.maxWidth = '90%';
-  clone.style.maxHeight = '90%';
-  clone.onclick = () => document.exitFullscreen?.() || document.webkitExitFullscreen?.() || wrapper.remove();
-  wrapper.appendChild(clone);
-  document.body.appendChild(wrapper);
-
-  /* 进入全屏（浏览器支持时）*/
-  wrapper.requestFullscreen?.() || wrapper.webkitRequestFullscreen?.();
-}
-
 </script>
+<!-- 1. 引入 mermaid 10.6.1（稳定版） -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+
+<!-- 2. 统一初始化 + 缓存 + 点击放大 -->
+<script>
+/* 缓存：id -> svg */
+const svgCache = new Map();
+
+/* 用 10.x 的回调写法，确保渲染完成后缓存 svg */
+mermaid.initialize({
+  startOnLoad: true,
+  theme: 'base',
+  themeVariables: {
+    primaryColor: '#e94560',
+    primaryTextColor: '#1a1a2e',
+    lineColor: '#0f3460',
+    secondaryColor: '#f8fafc',
+    tertiaryColor: '#e2e8f0'
+  },
+  flowchart: {
+    useMaxWidth: false,
+    htmlLabels: true
+  }
+});
+
+/* 等 mermaid 渲染结束再绑定点击事件 */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.mermaid').forEach((el, idx) => {
+      const id = el.id || `mermaid-${idx}`;
+      el.id = id;
+
+      /* 把 svg 缓存起来 */
+      svgCache.set(id, el.innerHTML);
+
+      /* 绑定点击 */
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', () => openFullscreen(el));
+    });
+  }, 800);   // 给 mermaid 一点渲染时间
+});
+
+function openFullscreen(rootEl) {
+  /* 1. 白底蒙层 */
+  var mask = document.createElement('div');
+  mask.style.cssText =
+    'position:fixed; inset:0; z-index:9999; background:#fff;' +
+    'display:flex; align-items:center; justify-content:center;' +
+    'overflow:auto; cursor:zoom-out; touch-action:none;';
+
+  /* 2. 可滚动居中容器 */
+  var box = document.createElement('div');
+  box.style.cssText =
+    'margin:auto; padding:30px; min-width:100vw; min-height:100vh;' +
+    'display:flex; align-items:center; justify-content:center;';
+
+  /* 3. 克隆 SVG */
+  var svg = rootEl.querySelector('svg');
+  var clonedSvg = svg.cloneNode(true);
+
+  /* 4. 字体大小及粗细补丁 */
+  var style = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+  style.textContent =
+    'svg * { font-size: 15px !important; font-weight: 700 !important; } ' +
+    '.nodeLabel, .label { font-size: 14px !important; font-weight: 700 !important; } ' +
+    '.edgeLabel { font-size: 15px !important; font-weight: 600 !important; } ' +
+    '.edgePath path { stroke-width: 1.5px !important; }';
+  clonedSvg.appendChild(style);
+
+  /* 5. 插入 DOM */
+  box.appendChild(clonedSvg);
+  mask.appendChild(box);
+  document.body.appendChild(mask);
+
+  /* 6. 关闭 & 手势（保持原逻辑） */
+  var close = function () { document.body.removeChild(mask); };
+  mask.addEventListener('click', close);
+  document.addEventListener('keydown', function esc(e) {
+    if (e.key === 'Escape') { close(); document.removeEventListener('keydown', esc); }
+  });
+
+  /* 7. 滚轮/手势缩放 */
+  var scale = 1;
+  function setScale(s) {
+    scale = Math.min(Math.max(s, 0.3), 5);
+    box.style.transform = 'scale(' + scale + ')';
+  }
+  mask.addEventListener('wheel', function (e) {
+    e.preventDefault();
+    setScale(scale - e.deltaY * 0.001);
+  });
+  var initDist = 0;
+  mask.addEventListener('touchstart', function (e) {
+    if (e.touches.length === 2) initDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
+                                                     e.touches[0].clientY - e.touches[1].clientY);
+  });
+  mask.addEventListener('touchmove', function (e) {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      var dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
+                            e.touches[0].clientY - e.touches[1].clientY);
+      if (initDist) setScale(scale * (dist / initDist));
+    }
+  }, { passive: false });
+
+  mask.requestFullscreen && mask.requestFullscreen();
+  mask.webkitRequestFullscreen && mask.webkitRequestFullscreen();
+}
+</script>
+
+</body>
