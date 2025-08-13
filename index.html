@@ -826,7 +826,7 @@
                                 <i class="fas fa-chess-king text-white text-xl"></i>
                             </div>
                             <h3 class="text-lg font-bold">摩根</h3>
-                            <p class="text-sm text-gray-600">前城主</p>
+                            <p class="text-sm text-gray-600">前城主(纯CS)</p>
                         </div>
                         <p class="text-sm text-gray-700">
                             灯塔制度的缔造者，他的选择展现了在极端环境下领导者的道德困境与历史责任。
@@ -1344,131 +1344,28 @@
     </main>
 
     <!-- Mobile TOC Toggle -->
-    <button class="lg:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded-lg shadow-lg" onclick="toggleTOC()">
-        <i class="fas fa-bars"></i>
-    </button>
+<button id="menuBtn" class="lg:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded-lg shadow-lg">
+  <i class="fas fa-bars"></i>
+</button>
 
-    <!-- Overlay for closing TOC -->
-    <div id="toc-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden lg:hidden" onclick="closeTOC()"></div>
+<!-- Overlay for closing TOC -->
+<div id="toc-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden lg:hidden"></div>
 
-    <script>
-        // Initialize Mermaid with custom theme for better contrast
-        mermaid.initialize({
-            startOnLoad: true,
-            theme: 'base',
-            themeVariables: {
-                primaryColor: '#e3f2fd',
-                primaryTextColor: '#1a1a2e',
-                primaryBorderColor: '#1976d2',
-                lineColor: '#0f3460',
-                sectionBkgColor: '#f8fafc',
-                altSectionBkgColor: '#ffffff',
-                gridColor: '#e2e8f0',
-                secondaryColor: '#f3e5f5',
-                tertiaryColor: '#e8f5e8',
-                background: '#f8fafc',
-                mainBkg: '#ffffff',
-                secondBkg: '#f8fafc',
-                tertiaryBkg: '#f1f5f9',
-                cScale0: '#e94560',
-                cScale1: '#1a1a2e',
-                cScale2: '#16213e',
-                cScale3: '#0f3460'
-            },
-            flowchart: {
-                useMaxWidth: true,
-                htmlLabels: true,
-                curve: 'basis'
-            },
-            timeline: {
-                useMaxWidth: true,
-                padding: 20
-            }
-        });
+<script>
+const toc = document.querySelector('.toc-fixed');
+const overlay = document.getElementById('toc-overlay');
+const menuBtn = document.getElementById('menuBtn');
 
-        // Initialize Mermaid Controls for zoom and pan
-        function initializeMermaidControls() {
-            const containers = document.querySelectorAll('.mermaid-container');
-            containers.forEach(container => {
-                const mermaidElement = container.querySelector('.mermaid');
-                let scale = 1;
-                let isDragging = false;
-                let startX, startY, translateX = 0, translateY = 0;
-                let isTouch = false;
-                let touchStartTime = 0;
-                let initialDistance = 0;
-                let initialScale = 1;
-                let isPinching = false;
-
-                const zoomInBtn = container.querySelector('.zoom-in');
-                const zoomOutBtn = container.querySelector('.zoom-out');
-                const resetBtn = container.querySelector('.reset-zoom');
-                const fullscreenBtn = container.querySelector('.fullscreen');
-
-                function updateTransform() {
-                    mermaidElement.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-                    container.classList.toggle('zoomed', scale > 1);
-                    mermaidElement.style.cursor = isDragging ? 'grabbing' : 'grab';
-                }
-
-                if (zoomInBtn) zoomInBtn.addEventListener('click', () => { scale = Math.min(scale * 1.25, 4); updateTransform(); });
-                if (zoomOutBtn) zoomOutBtn.addEventListener('click', () => { scale = Math.max(scale / 1.25, 0.3); if (scale <= 1) { translateX = 0; translateY = 0; } updateTransform(); });
-                if (resetBtn) resetBtn.addEventListener('click', () => { scale = 1; translateX = 0; translateY = 0; updateTransform(); });
-                if (fullscreenBtn) fullscreenBtn.addEventListener('click', () => {
-                    if (container.requestFullscreen) container.requestFullscreen();
-                    else if (container.webkitRequestFullscreen) container.webkitRequestFullscreen();
-                    else if (container.msRequestFullscreen) container.msRequestFullscreen();
-                });
-
-                // Touch and mouse event handlers
-                mermaidElement.addEventListener('mousedown', (e) => { if (isTouch) return; isDragging = true; startX = e.clientX - translateX; startY = e.clientY - translateY; updateTransform(); e.preventDefault(); });
-                document.addEventListener('mousemove', (e) => { if (isDragging && !isTouch) { translateX = e.clientX - startX; translateY = e.clientY - startY; updateTransform(); } });
-                document.addEventListener('mouseup', () => { isDragging = false; updateTransform(); });
-                document.addEventListener('mouseleave', () => { isDragging = false; updateTransform(); });
-
-                // Initialize display
-                updateTransform();
-            });
-        }
-
-        // Initialize Mermaid controls after DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeMermaidControls();
-        });
-
-        // Smooth scrolling for TOC links
-        document.querySelectorAll('.toc-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-                
-                if (window.innerWidth <= 1024) {
-                    closeTOC();
-                }
-            });
-        });
-
-        // Active TOC link highlighting
-        window.addEventListener('scroll', function() {
-            const sections = document.querySelectorAll('section[id]');
-            const tocLinks = document.querySelectorAll('.toc-link');
-            
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 100;
-                const sectionHeight = section.offsetHeight;
-                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            tocLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').substring(1)
+function toggleTOC() {
+  toc.classList.toggle('open');
+  overlay.classList.toggle('hidden');
+  document.body.classList.toggle('overflow-hidden', toc.classList.contains('open'));
+}
+function closeTOC() {
+  toc.classList.remove('open');
+  overlay.classList.add('hidden');
+  document.body.classList.remove('overflow-hidden');
+}
+menuBtn.addEventListener('click', toggleTOC);
+overlay.addEventListener('click', closeTOC);
+</script>
