@@ -1387,10 +1387,10 @@ function openFullscreen(rootEl) {
   /* 4. 字体大小及粗细补丁 */
   var style = document.createElementNS('http://www.w3.org/2000/svg', 'style');
   style.textContent =
-    'svg * { font-size: 15px !important; font-weight: 700 !important; } ' +
-    '.nodeLabel, .label { font-size: 14px !important; font-weight: 700 !important; } ' +
-    '.edgeLabel { font-size: 15px !important; font-weight: 600 !important; } ' +
-    '.edgePath path { stroke-width: 1.5px !important; }';
+  'svg * { font-size: 15px !important; font-weight: 700 !important; } ' +
+  '.nodeLabel, .label { font-size: 14px !important; font-weight: 700 !important; } ' +
+  '.edgeLabel { font-size: 15px !important; font-weight: 600 !important; } ' +
+  '.edgePath path { stroke-width: 1.5px !important; }';
   clonedSvg.appendChild(style);
 
   /* 5. 插入 DOM */
@@ -1432,6 +1432,99 @@ function openFullscreen(rootEl) {
   mask.requestFullscreen && mask.requestFullscreen();
   mask.webkitRequestFullscreen && mask.webkitRequestFullscreen();
 }
+</script>
+<script>
+/* 拖拽平移 + 移动端灵敏度 + 防止拖拽误触关闭 */
+(function () {
+  const originOpen = window.openFullscreen;
+  window.openFullscreen = function (rootEl) {
+    originOpen.call(window, rootEl);
+
+    const mask = document.body.lastElementChild;
+    const box  = mask.querySelector(':scope > div');
+
+    /* ---------- 1. 拖拽平移 ---------- */
+    let isDown = false, startX = 0, startY = 0, scrollL = 0, scrollT = 0, moved = false;
+
+    const start = (e) => {
+      const p = e.touches ? e.touches[0] : e;
+      isDown  = true;
+      moved   = false;
+      startX  = p.clientX;
+      startY  = p.clientY;
+      scrollL = mask.scrollLeft;
+      scrollT = mask.scrollTop;
+      mask.style.cursor = 'grabbing';
+      e.preventDefault();
+    };
+
+    const move = (e) => {
+      if (!isDown) return;
+      const p = e.touches ? e.touches[0] : e;
+      const dx = Math.abs(p.clientX - startX);
+      const dy = Math.abs(p.clientY - startY);
+      if (dx > 5 || dy > 5) moved = true;   // 简单阈值判断
+
+      mask.scrollTo(scrollL - (p.clientX - startX),
+                   scrollT - (p.clientY - startY));
+      e.preventDefault();
+    };
+
+    const end = () => {
+      isDown = false;
+      mask.style.cursor = 'zoom-out';
+    };
+
+    mask.addEventListener('mousedown',  start);
+    mask.addEventListener('mousemove',  move);
+    mask.addEventListener('mouseup',    end);
+    mask.addEventListener('mouseleave', end);
+
+    mask.addEventListener('touchstart', start, { passive: false });
+    mask.addEventListener('touchmove',  move,  { passive: false });
+    mask.addEventListener('touchend',   end);
+
+    /* ---------- 2. 单击关闭（带拖拽屏蔽） ---------- */
+    const oldClose = () => {                // 原关闭函数
+      document.body.removeChild(mask);
+      document.removeEventListener('keydown', esc);
+    };
+    const esc = (e) => { if (e.key === 'Escape') oldClose(); };
+    document.addEventListener('keydown', esc);
+
+    mask.addEventListener('click', (e) => {
+      if (!moved) oldClose();               // 仅当“没拖动”才退出
+    });
+
+    /* ---------- 3. 降低移动端双指缩放灵敏度 ---------- */
+    mask.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 2) {
+        mask._initDist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+      }
+    }, { passive: false });
+
+    mask.addEventListener('touchmove', (e) => {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        const dist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        if (mask._initDist) {
+          const newScale = Math.min(Math.max(
+            (box._scale || 1) * (dist / mask._initDist) ** 0.1,
+            0.3
+          ), 5);
+          box.style.transform = `scale(${newScale})`;
+          box._scale = newScale;
+        }
+      }
+    }, { passive: false });
+  };
+})();
 </script>
 
 </body>
