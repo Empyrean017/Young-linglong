@@ -1367,6 +1367,10 @@ window.addEventListener('load', () => {
 });
 
 function openFullscreen(rootEl) {
+
+ function safeRemove(node) {
+  if (node && node.parentNode) node.parentNode.removeChild(node);
+}
   /* 1. 白底蒙层 */
   var mask = document.createElement('div');
   mask.style.cssText =
@@ -1399,7 +1403,7 @@ function openFullscreen(rootEl) {
   document.body.appendChild(mask);
 
   /* 6. 关闭 & 手势（保持原逻辑） */
-  var close = function () { document.body.removeChild(mask); };
+  var close = function () {safeRemove(mask); };
   mask.addEventListener('click', close);
   document.addEventListener('keydown', function esc(e) {
     if (e.key === 'Escape') { close(); document.removeEventListener('keydown', esc); }
@@ -1433,98 +1437,56 @@ function openFullscreen(rootEl) {
   mask.webkitRequestFullscreen && mask.webkitRequestFullscreen();
 }
 </script>
+
+
+<style>
+/* 移动端图表放大：原生手势 + 任意方向滑动 */
+@media (max-width: 1024px) {
+  #mermaid-fullscreen-mask {
+    position: fixed;
+    inset: 0;
+    overflow: auto;              /* 允许滚动 */
+    background: #fff;
+  }
+  .mermaid-zoom-wrapper {
+    width: 300vw;                /* 足够大，产生可滚动区域 */
+    height: 300vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 10vw 10vh;
+  }
+  .mermaid-zoom-wrapper svg {
+    max-width: none;
+    max-height: none;
+    touch-action: manipulation;  /* 允许双指缩放 */
+  }
+}
+</style>
+
 <script>
-/* 拖拽平移 + 移动端灵敏度 + 防止拖拽误触关闭 */
-(function () {
-  const originOpen = window.openFullscreen;
+/* 移动端 openFullscreen：把 svg 塞进大容器 */
+(() => {
+  const rawOpen = window.openFullscreen;
   window.openFullscreen = function (rootEl) {
-    originOpen.call(window, rootEl);
+    rawOpen.call(this, rootEl);
 
-    const mask = document.body.lastElementChild;
-    const box  = mask.querySelector(':scope > div');
+    const mask   = document.body.lastElementChild;
+    const box    = mask.querySelector(':scope > div');
+    const svg    = box.querySelector('svg');
+    if (!svg) return;
 
-    /* ---------- 1. 拖拽平移 ---------- */
-    let isDown = false, startX = 0, startY = 0, scrollL = 0, scrollT = 0, moved = false;
+    /* 创建滚动容器 */
+    const wrap = document.createElement('div');
+    wrap.className = 'mermaid-zoom-wrapper';
+    wrap.appendChild(svg);
 
-    const start = (e) => {
-      const p = e.touches ? e.touches[0] : e;
-      isDown  = true;
-      moved   = false;
-      startX  = p.clientX;
-      startY  = p.clientY;
-      scrollL = mask.scrollLeft;
-      scrollT = mask.scrollTop;
-      mask.style.cursor = 'grabbing';
-      e.preventDefault();
-    };
+    /* 清空旧内容，插入新容器 */
+    box.innerHTML = '';
+    box.appendChild(wrap);
 
-    const move = (e) => {
-      if (!isDown) return;
-      const p = e.touches ? e.touches[0] : e;
-      const dx = Math.abs(p.clientX - startX);
-      const dy = Math.abs(p.clientY - startY);
-      if (dx > 5 || dy > 5) moved = true;   // 简单阈值判断
-
-      mask.scrollTo(scrollL - (p.clientX - startX),
-                   scrollT - (p.clientY - startY));
-      e.preventDefault();
-    };
-
-    const end = () => {
-      isDown = false;
-      mask.style.cursor = 'zoom-out';
-    };
-
-    mask.addEventListener('mousedown',  start);
-    mask.addEventListener('mousemove',  move);
-    mask.addEventListener('mouseup',    end);
-    mask.addEventListener('mouseleave', end);
-
-    mask.addEventListener('touchstart', start, { passive: false });
-    mask.addEventListener('touchmove',  move,  { passive: false });
-    mask.addEventListener('touchend',   end);
-
-    /* ---------- 2. 单击关闭（带拖拽屏蔽） ---------- */
-    const oldClose = () => {                // 原关闭函数
-      document.body.removeChild(mask);
-      document.removeEventListener('keydown', esc);
-    };
-    const esc = (e) => { if (e.key === 'Escape') oldClose(); };
-    document.addEventListener('keydown', esc);
-
-    mask.addEventListener('click', (e) => {
-      if (!moved) oldClose();               // 仅当“没拖动”才退出
-    });
-
-    /* ---------- 3. 降低移动端双指缩放灵敏度 ---------- */
-    mask.addEventListener('touchstart', (e) => {
-      if (e.touches.length === 2) {
-        mask._initDist = Math.hypot(
-          e.touches[0].clientX - e.touches[1].clientX,
-          e.touches[0].clientY - e.touches[1].clientY
-        );
-      }
-    }, { passive: false });
-
-    mask.addEventListener('touchmove', (e) => {
-      if (e.touches.length === 2) {
-        e.preventDefault();
-        const dist = Math.hypot(
-          e.touches[0].clientX - e.touches[1].clientX,
-          e.touches[0].clientY - e.touches[1].clientY
-        );
-        if (mask._initDist) {
-          const newScale = Math.min(Math.max(
-            (box._scale || 1) * (dist / mask._initDist) ** 0.1,
-            0.3
-          ), 5);
-          box.style.transform = `scale(${newScale})`;
-          box._scale = newScale;
-        }
-      }
-    }, { passive: false });
+    mask.id = 'mermaid-fullscreen-mask';
   };
 })();
 </script>
-
 </body>
