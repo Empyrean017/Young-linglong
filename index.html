@@ -1437,55 +1437,39 @@ function openFullscreen(rootEl) {
   mask.webkitRequestFullscreen && mask.webkitRequestFullscreen();
 }
 </script>
-
-
 <style>
-/* 移动端图表放大：原生手势 + 任意方向滑动 */
+/* 移动端放大时用浏览器原生捏合缩放 */
 @media (max-width: 1024px) {
-  #mermaid-fullscreen-mask {
-    position: fixed;
-    inset: 0;
-    overflow: auto;              /* 允许滚动 */
-    background: #fff;
-  }
-  .mermaid-zoom-wrapper {
-    width: 300vw;                /* 足够大，产生可滚动区域 */
-    height: 300vh;
+  #mermaid-fullscreen-mask > div {
+    width: 100vw;
+    height: 100vh;
     display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 10vw 10vh;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
   }
-  .mermaid-zoom-wrapper svg {
+  #mermaid-fullscreen-mask svg {
     max-width: none;
     max-height: none;
-    touch-action: manipulation;  /* 允许双指缩放 */
+    touch-action: manipulation;   /* 允许双指缩放 */
   }
 }
 </style>
 
 <script>
-/* 移动端 openFullscreen：把 svg 塞进大容器 */
+/* 拦截移动端 openFullscreen：仅把图表放进可滚动的容器，交给浏览器手势 */
 (() => {
   const rawOpen = window.openFullscreen;
   window.openFullscreen = function (rootEl) {
     rawOpen.call(this, rootEl);
 
-    const mask   = document.body.lastElementChild;
-    const box    = mask.querySelector(':scope > div');
-    const svg    = box.querySelector('svg');
-    if (!svg) return;
+    const mask = document.body.lastElementChild;
+    const box  = mask.querySelector(':scope > div');
+    if (!box) return;
 
-    /* 创建滚动容器 */
-    const wrap = document.createElement('div');
-    wrap.className = 'mermaid-zoom-wrapper';
-    wrap.appendChild(svg);
-
-    /* 清空旧内容，插入新容器 */
-    box.innerHTML = '';
-    box.appendChild(wrap);
-
-    mask.id = 'mermaid-fullscreen-mask';
+    mask.id = 'mermaid-fullscreen-mask';   // 让 CSS 生效
+    box.style.transform = 'none';          // 去掉之前的 translate/scale
+    box.style.cursor   = 'default';
   };
 })();
 </script>
